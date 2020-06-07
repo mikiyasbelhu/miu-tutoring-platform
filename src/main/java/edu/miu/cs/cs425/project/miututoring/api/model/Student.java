@@ -2,13 +2,11 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Student {
@@ -33,6 +31,10 @@ public class Student {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate enrollmentDate;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
+    List<Report> reports;
+
 
     public Student() {
     }
