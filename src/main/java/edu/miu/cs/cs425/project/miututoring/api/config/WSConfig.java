@@ -13,8 +13,7 @@ public class WSConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/tutorial")
-                .setAllowedOrigins("http://localhost:8081",
-                        "chrome-extension://ggnhohnkfcpcanfekomdkjffnfcjnjam").withSockJS();
+                .setAllowedOrigins("*").withSockJS();
     }
 
     @Override
