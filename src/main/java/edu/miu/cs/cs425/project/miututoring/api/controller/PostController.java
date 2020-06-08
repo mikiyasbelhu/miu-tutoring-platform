@@ -31,16 +31,23 @@ public class PostController {
     @MessageMapping("/chat.register/{tutorialGroupId}")
     public void register(@Payload Post chatMessage, @DestinationVariable String tutorialGroupId, SimpMessageHeaderAccessor headerAccessor){
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        Post savedChatMessage = this.postService.savePost(chatMessage);
-        System.out.println(savedChatMessage);
-        this.simpMessagingTemplate.convertAndSend("/group/"+tutorialGroupId, savedChatMessage);
+        if(chatMessage.getType() == Post.MessageType.CHAT){
+            chatMessage = this.postService.savePost(chatMessage);
+        }
+        this.simpMessagingTemplate.convertAndSend("/group/"+tutorialGroupId, chatMessage);
     }
 
     @MessageMapping("/chat.send/{tutorialGroupId}")
     public void sendMessage(@Payload Post chatMessage, @DestinationVariable String tutorialGroupId){
-        Post savedChatMessage = this.postService.savePost(chatMessage);
-        System.out.println(savedChatMessage);
-        this.simpMessagingTemplate.convertAndSend("/group/"+tutorialGroupId, savedChatMessage);
+        if(chatMessage.getType() == Post.MessageType.CHAT){
+            chatMessage = this.postService.savePost(chatMessage);
+        }
+        this.simpMessagingTemplate.convertAndSend("/group/"+tutorialGroupId, chatMessage);
+    }
+
+    @MessageMapping("/chat.stream/{tutorialGroupId}")
+    public void streamMessage(@Payload Post chatMessage, @DestinationVariable String tutorialGroupId){
+        this.simpMessagingTemplate.convertAndSend("/group/code/"+tutorialGroupId, chatMessage);
     }
 
     @PostMapping(value="/getbytutorialgroup")
