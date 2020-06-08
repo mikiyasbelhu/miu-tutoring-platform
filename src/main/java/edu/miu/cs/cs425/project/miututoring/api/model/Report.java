@@ -25,7 +25,7 @@ public class Report {
     private Course course;
 
     @NotNull(message = "*Report is Required")
-    private String report;
+    private String reportText;
 
 
     public Report() {
@@ -34,7 +34,7 @@ public class Report {
         this.student = student;
         this.tutorialGroup = tutorialGroup;
         this.course = course;
-        this.report = report;
+        this.reportText = report;
     }
 
     public Integer getReportId() {
@@ -70,11 +70,11 @@ public class Report {
     }
 
     public String getReport() {
-        return report;
+        return reportText;
     }
 
     public void setReport(String report) {
-        this.report = report;
+        this.reportText = report;
     }
 
     @Override
@@ -85,6 +85,6 @@ public class Report {
                 this.student.getFirstName()+" "+this.student.getLastName(),
                 this.tutorialGroup,
                 this.course,
-                this.report);
+                this.reportText);
     }
 }
