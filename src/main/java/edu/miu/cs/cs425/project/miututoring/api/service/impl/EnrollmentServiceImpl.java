@@ -29,6 +29,11 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     }
 
     @Override
+    public Enrollment saveEnrollment(Enrollment enrollment) {
+       return enrollmentRepository.save(enrollment);
+    }
+
+    @Override
     public Enrollment updateEnrollment(Enrollment updatedEnrollment, Integer enrollmentId) {
         return enrollmentRepository.findById(enrollmentId).
                 map(enrollment -> {

@@ -23,6 +23,11 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
+    public Section saveSection(Section section){
+        return sectionRepository.save(section);
+    }
+
+    @Override
     public Section getSectionById(Integer sectionId) {
         return sectionRepository.findById(sectionId).orElse(null);
     }

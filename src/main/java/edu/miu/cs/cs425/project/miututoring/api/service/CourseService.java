@@ -5,6 +5,7 @@ import edu.miu.cs.cs425.project.miututoring.api.model.Course;
 
 import java.util.List;
 
+
 public interface CourseService {
 
     List<Course> getAllCourses();

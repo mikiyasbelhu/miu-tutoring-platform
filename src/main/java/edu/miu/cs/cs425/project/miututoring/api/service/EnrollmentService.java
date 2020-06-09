@@ -9,6 +9,7 @@ import java.util.List;
 public interface EnrollmentService {
     List<Enrollment>getAllEnrollment();
     Enrollment getEnrollmentById(Integer id);
+    Enrollment saveEnrollment(Enrollment enrollment);
     Enrollment updateEnrollment(Enrollment updatedEnrollment, Integer enrollmentId);
     void deleteEnrollmentById(Integer enrollmentId);
     Enrollment registerEnrollment(Enrollment enrollment);
