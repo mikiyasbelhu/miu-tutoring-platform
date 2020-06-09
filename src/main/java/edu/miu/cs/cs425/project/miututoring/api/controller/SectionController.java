@@ -1,4 +1,3 @@
-/*
 package edu.miu.cs.cs425.project.miututoring.api.controller;
 
 import edu.miu.cs.cs425.project.miututoring.api.model.Section;
@@ -26,17 +25,19 @@ public class SectionController {
     public Section getSection(@PathVariable Integer sectionId){
         return sectionService.getSectionById(sectionId);
     }
+
     @PutMapping(value="/edit/{sectionId}")
     public Section updateSection(@Valid @RequestBody Section section,@PathVariable Integer sectionId){
         return sectionService.updateSection(section,sectionId);
     }
+
     @PostMapping(value="/register")
     public Section registerSection(@Valid @RequestBody Section section){
         return sectionService.registerSection(section);
     }
-    @DeleteMapping(value="/delete")
+
+    @DeleteMapping(value="/delete/{sectionId}")
     public void deleteSection(@PathVariable Integer sectionId){
         sectionService.deleteSectionById(sectionId);
     }
 }
-*/

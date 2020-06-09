@@ -1,4 +1,3 @@
-/*
 package edu.miu.cs.cs425.project.miututoring.api.controller;
 
 import edu.miu.cs.cs425.project.miututoring.api.model.Enrollment;
@@ -33,9 +32,8 @@ public class EnrollmentController {
     public Enrollment registerEnrollment(@Valid @RequestBody Enrollment enrollment){
         return enrollmentService.registerEnrollment(enrollment);
     }
-    @DeleteMapping(value="/delete")
+    @DeleteMapping(value="/delete/{enrollmentId}")
     public void deleteEnrollment(@PathVariable Integer enrollmentId){
         enrollmentService.deleteEnrollmentById(enrollmentId);
     }
 }
-*/
