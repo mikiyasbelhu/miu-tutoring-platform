@@ -18,9 +18,10 @@ import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
 
+    @Autowired
     ReportRepository reportRepository;
 
-    @Autowired
+
     public ReportServiceImpl(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }
