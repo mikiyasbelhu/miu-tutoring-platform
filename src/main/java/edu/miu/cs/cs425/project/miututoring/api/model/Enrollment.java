@@ -1,40 +1,44 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
-import com.sun.javafx.beans.IDProperty;
-import edu.miu.cs.cs425.project.miututoring.api.model.Section;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name="enrollments")
 public class Enrollment {
     public enum RoleType{
-        TUTEE,TUTOR;
+        TUTEE,
+        TUTOR;
     }
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer enrollmentId;
-    @NotBlank(message ="Role Type is required")
+
     private RoleType role;
-    @NotBlank(message ="Section is required")
-    @OneToOne(cascade = CascadeType.MERGE)//to b seen!
-    @JoinColumn(name = "enrollmentId")
+
+    @OneToOne(cascade = CascadeType.ALL)//to b seen!
+    @JoinColumn(name = "section_id")
     private Section section;
-    @NotBlank(message ="Tutorial Group is required")
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "tutorialGroupId")
-    private TutorialGroup tutorialGroup;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "tutorialgroup_enrollment",
+            joinColumns = {@JoinColumn(name = "group_id")},
+            inverseJoinColumns = {@JoinColumn(name="enrollment_id")})
+    public TutorialGroup tutorialGroup;
 
     public Enrollment() {
     }
 
-    public Enrollment(Integer enrollmentId, @NotBlank RoleType role, Section section, @NotBlank TutorialGroup tutorialGroup) {
-        this.enrollmentId = enrollmentId;
+    public Enrollment(  RoleType role, Section section,  TutorialGroup tutorialGroup) {
         this.role = role;
         this.section = section;
         this.tutorialGroup = tutorialGroup;
     }
 
+    public Enrollment (RoleType role){
+        this.role = role;
+    }
 
     public Integer getEnrollmentId() {
         return enrollmentId;

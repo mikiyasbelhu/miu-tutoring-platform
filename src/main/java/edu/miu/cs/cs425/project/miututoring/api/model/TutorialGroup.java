@@ -1,10 +1,8 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 public class TutorialGroup {
@@ -15,6 +13,10 @@ public class TutorialGroup {
 
     @NotBlank
     private String tutorialGroupNumber;
+
+    //to be checked
+    @OneToMany(mappedBy = "tutorialGroup")
+    private List<Enrollment> enrollments;
 
     public TutorialGroup() {
     }
