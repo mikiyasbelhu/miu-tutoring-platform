@@ -16,9 +16,11 @@ import java.util.List;
 @RestController()
 @RequestMapping(value = "/api/v1/course", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CourseController {
-    CourseService courseService;
 
     @Autowired
+    CourseService courseService;
+
+
     public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }

@@ -17,9 +17,10 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/report", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReportController {
 
+    @Autowired
     ReportService reportService;
 
-    @Autowired
+
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
