@@ -38,7 +38,10 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student registerStudent(Student student) {
-        return studentRepository.save(student);
+        if(!studentRepository.findByUsername(student.getUsername()).isPresent()){
+            return studentRepository.save(student);
+        }
+        return null;
     }
 
     @Override
