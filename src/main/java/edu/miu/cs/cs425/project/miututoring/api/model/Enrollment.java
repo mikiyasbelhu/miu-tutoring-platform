@@ -3,6 +3,7 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrollment {
@@ -15,26 +16,27 @@ public class Enrollment {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer enrollmentId;
 
+
+    @NotNull
     private RoleType role;
 
-    @OneToOne(cascade = CascadeType.ALL)//to b seen!
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "section_id")
     private Section section;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "tutorialgroup_enrollment",
-            joinColumns = {@JoinColumn(name = "group_id")},
-            inverseJoinColumns = {@JoinColumn(name="enrollment_id")})
+    @ManyToOne
+    @JoinColumn(name="tutorial_Group")
     public TutorialGroup tutorialGroup;
 
     public Enrollment() {
     }
 
-    public Enrollment(  RoleType role, Section section,  TutorialGroup tutorialGroup) {
+    public Enrollment(  RoleType role, Section section,TutorialGroup tutorialGroup) {
         this.role = role;
         this.section = section;
         this.tutorialGroup = tutorialGroup;
     }
+
 
     public Enrollment (RoleType role){
         this.role = role;

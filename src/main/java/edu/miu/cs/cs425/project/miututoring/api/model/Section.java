@@ -2,6 +2,7 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -22,13 +23,15 @@ public class Section {
     @NotBlank(message = "Class room is required")
     private String classRoom;
 
+    //@NotBlank(Is not working for the Enums!!!)
+    @NotNull
     private BlockMonth month;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "courseId")
     private Course course;                                                 //assuming the relation is one directional,
 
-    @ManyToOne(cascade = CascadeType.ALL)    //(name ="faculty_by",nullable=false)
+    @ManyToOne(cascade = CascadeType.ALL)                                   //(name ="faculty_by",nullable=false)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
@@ -40,14 +43,14 @@ public class Section {
     }
 
     public Section(String sectionName, String classRoom, BlockMonth month, Course course, Faculty faculty
-                   //List<TutorialGroup> tutorialGroup
+//            ,List<TutorialGroup> tutorialGroup                            //with this one it will result data persistence exception
     ) {
         this.sectionName = sectionName;
         this.classRoom = classRoom;
         this.month = month;
         this.course = course;
         this.faculty = faculty;
-       // this.tutorialGroup = tutorialGroup;
+//        this.tutorialGroup = tutorialGroup;
     }
 
     public Section(String sectionName, String classRoom, BlockMonth month){
