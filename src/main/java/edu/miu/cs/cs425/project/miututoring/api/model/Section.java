@@ -16,6 +16,9 @@ public class Section {
 
     private String sectionName;
 
+    @OneToMany(mappedBy = "section")
+    private List<TutorRequest> tutorRequests;
+
     @NotBlank(message = "Class room is required")
     private String classRoom;
 
