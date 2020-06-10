@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Post {
 
     public enum MessageType{
-        CHAT,LEAVE,JOIN
+        CHAT,LEAVE,JOIN,LANGUAGE
     }
 
     @Id

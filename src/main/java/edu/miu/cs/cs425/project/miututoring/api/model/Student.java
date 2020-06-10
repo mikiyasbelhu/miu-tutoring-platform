@@ -6,14 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studentId;
+public class Student extends User {
 
     @NotBlank
     private String studentNumber;
@@ -39,25 +37,18 @@ public class Student {
     TutorRequest tutorRequest;
 
 
+
     public Student() {
     }
 
-    public Student(Long studentId, @NotBlank String studentNumber, @NotBlank String firstName, String middleName, @NotBlank String lastName, Double cgpa, LocalDate enrollmentDate) {
-        this.studentId = studentId;
+    public Student(String username,String password, @NotBlank String studentNumber, @NotBlank String firstName, String middleName, @NotBlank String lastName, Double cgpa, LocalDate enrollmentDate) {
+        super(username,password,new ArrayList<>(Arrays.asList("ROLE_STUDENT")));
         this.studentNumber = studentNumber;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.cgpa = cgpa;
         this.enrollmentDate = enrollmentDate;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
     }
 
     public String getStudentNumber() {

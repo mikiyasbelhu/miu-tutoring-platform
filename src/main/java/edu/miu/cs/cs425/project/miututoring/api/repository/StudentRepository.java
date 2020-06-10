@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student,Long> {
@@ -15,4 +16,5 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
                                                                                                                                   Pageable pageable);
     List<Student> findAllByCgpaEquals(Double overdueFee);
     List<Student> findAllByEnrollmentDateEquals(LocalDate datePublished);
+    Optional<Student> findByUsername(String username);
 }
