@@ -33,6 +33,11 @@ public class Student extends User {
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     List<Report> reports;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    TutorRequest tutorRequest;
+
+
+
     public Student() {
     }
 
