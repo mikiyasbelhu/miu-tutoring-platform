@@ -31,7 +31,7 @@ public class ReportController {
         return reportService.getAllReportsPaged(page, itemsPerPage, sortBy, sortDesc);
     }
 
-    @GetMapping(value = "/listInGroup")
+    @GetMapping(value = "/getbygroup")
     public List<Report> getReportInATutorialGroup(TutorialGroup tutorialGroup) {
         return reportService.getAllReportsInATutorialGroup(tutorialGroup);
     }
