@@ -5,6 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,8 +24,17 @@ public class User implements UserDetails {
 
     @NotEmpty
     private String username;
+
     @NotEmpty
     private String password;
+
+    @NotBlank
+    private String firstName;
+
+    private String middleName;
+
+    @NotBlank
+    private String lastName;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
@@ -37,9 +47,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(@NotEmpty String username, @NotEmpty String password, List<String> roles) {
+    public User(@NotEmpty String username, @NotEmpty String password,  @NotBlank String firstName, String middleName, @NotBlank String lastName, List<String> roles) {
         this.username = username;
         this.password = password;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
         this.roles = roles;
     }
 
@@ -57,6 +70,30 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<String> getRoles() {

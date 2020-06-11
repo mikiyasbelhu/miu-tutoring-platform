@@ -16,14 +16,6 @@ public class Student extends User {
     @NotBlank
     private String studentNumber;
 
-    @NotBlank
-    private String firstName;
-
-    private String middleName;
-
-    @NotBlank
-    private String lastName;
-
     private Double cgpa;
 
     @NotNull
@@ -37,11 +29,8 @@ public class Student extends User {
     }
 
     public Student(String username,String password, @NotBlank String studentNumber, @NotBlank String firstName, String middleName, @NotBlank String lastName, Double cgpa, LocalDate enrollmentDate) {
-        super(username,password,new ArrayList<>(Arrays.asList("ROLE_STUDENT")));
+        super(username,password,firstName, middleName, lastName, new ArrayList<>(Arrays.asList("ROLE_STUDENT")));
         this.studentNumber = studentNumber;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
         this.cgpa = cgpa;
         this.enrollmentDate = enrollmentDate;
     }
@@ -52,30 +41,6 @@ public class Student extends User {
 
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public Double getCgpa() {
