@@ -42,8 +42,8 @@ public class DataInitializer implements CommandLineRunner {
         saveTutorialGroup(tutorialGroup1);
         saveTutorialGroup(tutorialGroup2);
         List<User> usersList = new ArrayList<User>(Arrays.asList(
-                new User("admin@miu.edu",this.passwordEncoder.encode("admin"), new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY"))),
-                new User("faculty@miu.edu",this.passwordEncoder.encode("faculty"), new ArrayList<>(Arrays.asList("ROLE_FACULTY")))
+                new User("admin@miu.edu","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY"))),
+                new User("faculty@miu.edu","faculty","Liya","","Tesfaye", new ArrayList<>(Arrays.asList("ROLE_FACULTY")))
         ));
         saveUsers(usersList);
     }
