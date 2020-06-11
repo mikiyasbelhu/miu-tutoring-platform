@@ -12,12 +12,15 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.user.SimpSession;
+import org.springframework.messaging.simp.user.SimpSubscription;
 import org.springframework.messaging.simp.user.SimpUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -70,14 +73,22 @@ public class PostController {
         return postService.getPostsByTutorialGroup(tutorialGroup);
     }
 
-    @GetMapping(value="/users")
-    public List<User> getOnlineUsers() {
+    @GetMapping(value="/group/{tutorialGroupId}/users")
+    public List<User> getOnlineUsers(@PathVariable Integer tutorialGroupId) {
         Set<SimpUser> userRegistries = simpUserRegistry.getUsers();
-        List<User> onlineUsers = new ArrayList<>();
-        for (SimpUser user : userRegistries) {
-            onlineUsers.add(userDetailsService.getByUsername(user.getName()));
+        Set<User> onlineUsers = new HashSet<>();
+        for(SimpUser user:userRegistries){
+            for(SimpSession session:user.getSessions()){
+                for(SimpSubscription subscription:session.getSubscriptions()){
+                    if(subscription.getDestination().equals("/group/"+tutorialGroupId)){
+                        onlineUsers.add(userDetailsService.getByUsername(user.getName()));
+                    }
+                }
+            }
         }
-        return onlineUsers;
+        List<User> users = new ArrayList<>();
+        users.addAll(onlineUsers);
+        return users;
     }
 
 }

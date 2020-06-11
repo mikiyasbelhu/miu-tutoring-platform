@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,9 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
 
     StudentRepository studentRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     StudentServiceImpl(StudentRepository studentRepository){
@@ -39,6 +43,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student registerStudent(Student student) {
         if(!studentRepository.findByUsername(student.getUsername()).isPresent()){
+            student.setPassword(this.passwordEncoder.encode(student.getPassword()));
             return studentRepository.save(student);
         }
         return null;
