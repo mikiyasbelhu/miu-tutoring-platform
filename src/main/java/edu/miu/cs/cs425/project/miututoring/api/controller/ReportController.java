@@ -17,9 +17,10 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/report", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReportController {
 
+    @Autowired
     ReportService reportService;
 
-    @Autowired
+
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
@@ -30,22 +31,22 @@ public class ReportController {
         return reportService.getAllReportsPaged(page, itemsPerPage, sortBy, sortDesc);
     }
 
-    @GetMapping(value = {"/listInGroup"})
+    @GetMapping(value = "/getbygroup")
     public List<Report> getReportInATutorialGroup(TutorialGroup tutorialGroup) {
         return reportService.getAllReportsInATutorialGroup(tutorialGroup);
     }
 
-    @GetMapping(value = "get/{reportId}")
+    @GetMapping(value = "/get/{reportId}")
     public Report getReportById(@PathVariable Integer reportId){
         return reportService.getReportById(reportId);
     }
 
-    @PutMapping(value = "edit/{reportId}")
+    @PutMapping(value = "/edit/{reportId}")
     public Report updateReport(@Valid @RequestBody Report updatedReport, @PathVariable Integer reportId){
         return reportService.updateReport(updatedReport,reportId);
     }
 
-    @DeleteMapping(value = "delete/{reportId}")
+    @DeleteMapping(value = "/delete/{reportId}")
     public void deleteReportById(@PathVariable Integer reportId){
         reportService.deleteReportById(reportId);
     }
