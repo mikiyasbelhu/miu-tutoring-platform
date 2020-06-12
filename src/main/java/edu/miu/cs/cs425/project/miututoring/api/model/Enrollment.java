@@ -2,7 +2,6 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -19,7 +18,7 @@ public class Enrollment {
     @NotNull
     private RoleType role;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "section_id")
     private Section section;
 
