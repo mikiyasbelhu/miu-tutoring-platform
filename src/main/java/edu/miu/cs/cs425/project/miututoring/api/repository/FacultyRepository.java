@@ -15,6 +15,6 @@ public interface FacultyRepository extends JpaRepository<Faculty,Long> {
                                                                                                                               Pageable pageable);
     Optional<Faculty> findFacultyByDepartment(String department);
 
-    Optional<Student> findByUsername(String username);
+    Optional<Faculty> findByUsername(String username);
 
 }

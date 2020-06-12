@@ -10,7 +10,6 @@ import java.util.Arrays;
 @Entity
 public class Faculty extends User {
 
-
     @NotBlank(message = "* Department is required")
     private String department;
 
@@ -21,7 +20,6 @@ public class Faculty extends User {
         super(username, password, firstName, middleName, lastName, new ArrayList<>(Arrays.asList("ROLE_FACULTY")));
         this.department = department;
     }
-
 
     public String getDepartment() {
         return department;
