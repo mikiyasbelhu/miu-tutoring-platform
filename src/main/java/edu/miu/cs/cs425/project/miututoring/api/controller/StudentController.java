@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping(value = "/api/v1/student", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,6 +35,7 @@ public class StudentController {
 
     @PostMapping(value = "/register")
     public Student registerStudent(@Valid @RequestBody Student student){
+        student.setRoles(new ArrayList<>(Arrays.asList("ROLE_STUDENT")));
         return studentService.registerStudent(student);
     }
 

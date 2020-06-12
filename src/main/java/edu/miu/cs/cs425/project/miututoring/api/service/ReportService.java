@@ -6,7 +6,7 @@ import edu.miu.cs.cs425.project.miututoring.api.model.Course;
 import edu.miu.cs.cs425.project.miututoring.api.model.Report;
 import edu.miu.cs.cs425.project.miututoring.api.model.Student;
 import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
-import org.springframework.data.domain.Page;;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
