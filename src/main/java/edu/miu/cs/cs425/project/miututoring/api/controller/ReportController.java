@@ -27,7 +27,7 @@ public class ReportController {
 
     @GetMapping(value = "/list")
     public Page<Report> listReports(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                     @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
         return reportService.getAllReportsPaged(page, itemsPerPage, sortBy, sortDesc);
     }
 
@@ -58,7 +58,7 @@ public class ReportController {
 
     @GetMapping(value = {"/search"})
     public Page<Report> searchReport(@RequestParam String searchQuery, @RequestParam Student student, @RequestParam Course course, @RequestParam TutorialGroup tutorialGroup, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                     @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
         return reportService.searchReports(searchQuery, student, course, tutorialGroup, page, itemsPerPage, sortBy, sortDesc);
     }
 }

@@ -3,11 +3,11 @@ package edu.miu.cs.cs425.project.miututoring.api.controller;
 import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
 import edu.miu.cs.cs425.project.miututoring.api.service.TutorialGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/tutorialgroup", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -21,8 +21,9 @@ public class TutorialGroupController {
     }
 
     @GetMapping(value="/list")
-    public List<TutorialGroup> listTutorialGroups(){
-        return tutorialGroupService.getAllTutorialGroups();
+    public Page<TutorialGroup> listTutorialGroups(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
+                                                  @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc){
+        return tutorialGroupService.getAllTutorialGroupsPaged(page,itemsPerPage,sortBy,sortDesc);
     }
 
     @GetMapping(value = {"/get/{tutorialGroupId}"})

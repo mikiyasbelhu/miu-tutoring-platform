@@ -24,7 +24,7 @@ public class StudentController {
 
     @GetMapping(value="/list")
     public Page<Student> listStudents(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                      @RequestParam String sortBy,@RequestParam(defaultValue = "false") Boolean sortDesc){
+                                      @RequestParam(defaultValue = "") String sortBy,@RequestParam(defaultValue = "false") Boolean sortDesc){
         return studentService.getAllStudentsPaged(page,itemsPerPage,sortBy,sortDesc);
     }
 
@@ -54,7 +54,7 @@ public class StudentController {
 
     @GetMapping(value = {"/search"})
     public Page<Student> searchStudent(@RequestParam String searchQuery, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                       @RequestParam String sortBy,@RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                       @RequestParam(defaultValue = "") String sortBy,@RequestParam(defaultValue = "false") Boolean sortDesc) {
         return studentService.searchStudents(searchQuery,page,itemsPerPage,sortBy,sortDesc);
     }
 
