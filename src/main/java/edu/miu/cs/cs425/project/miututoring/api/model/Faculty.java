@@ -1,17 +1,15 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 @Entity
-public class Faculty {
+public class Faculty extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer facultyId;
 
     @NotBlank(message = "* Department is required")
     private String department;
@@ -19,15 +17,17 @@ public class Faculty {
     public Faculty() {
     }
 
-    public Faculty(@NotBlank(message = "* Department is required") String department) {
+    public Faculty(@NotEmpty String username, @NotEmpty String password, @NotBlank String firstName, String middleName, @NotBlank String lastName, @NotBlank(message = "* Department is required") String department) {
+        super(username, password, firstName, middleName, lastName, new ArrayList<>(Arrays.asList("ROLE_FACULTY")));
         this.department = department;
     }
 
-    public Integer getFacultyId() {
-        return facultyId;
+
+    public String getDepartment() {
+        return department;
     }
 
-    public void setFacultyId(Integer facultyId) {
-        this.facultyId = facultyId;
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }
