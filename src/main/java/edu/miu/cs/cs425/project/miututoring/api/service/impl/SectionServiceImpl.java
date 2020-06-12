@@ -4,6 +4,9 @@ import edu.miu.cs.cs425.project.miututoring.api.model.Section;
 import edu.miu.cs.cs425.project.miututoring.api.repository.SectionRepository;
 import edu.miu.cs.cs425.project.miututoring.api.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,5 +57,10 @@ public class SectionServiceImpl implements SectionService {
     @Override
     public Section registerSection(Section section) {
         return sectionRepository.save(section);
+    }
+
+    @Override
+    public Page<Section> getAllSectionsPaged(Integer page, Integer itemsPerPage, String sortBy, Boolean sortDesc) {
+        return sectionRepository.findAll(PageRequest.of(page, itemsPerPage == -1 ? Integer.MAX_VALUE :itemsPerPage, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 }
