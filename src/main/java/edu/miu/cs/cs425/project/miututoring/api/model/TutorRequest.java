@@ -21,7 +21,7 @@ public class TutorRequest {
 
    private Status status;
 
-    private enum Status{
+    public enum Status{
         PENDING, ACCEPTED, REJECTED;
     }
 
