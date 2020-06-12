@@ -7,15 +7,14 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrollment {
-    public enum RoleType{
+    public enum RoleType {
         TUTEE,
         TUTOR;
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer enrollmentId;
-
 
     @NotNull
     private RoleType role;
@@ -25,20 +24,32 @@ public class Enrollment {
     private Section section;
 
     @ManyToOne
-    @JoinColumn(name="tutorial_Group")
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "tutorial_Group")
     public TutorialGroup tutorialGroup;
 
     public Enrollment() {
     }
 
-    public Enrollment(  RoleType role, Section section,TutorialGroup tutorialGroup) {
+    public Enrollment(Student student, RoleType role, Section section, TutorialGroup tutorialGroup) {
+        this.student = student;
         this.role = role;
         this.section = section;
         this.tutorialGroup = tutorialGroup;
     }
 
+    public Student getStudent() {
+        return student;
+    }
 
-    public Enrollment (RoleType role){
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Enrollment(RoleType role) {
         this.role = role;
     }
 
@@ -79,6 +90,7 @@ public class Enrollment {
         return "Enrollment{" +
                 "role=" + role +
                 ", section=" + section +
+                ", student=" + student +
                 ", tutorialGroup=" + tutorialGroup +
                 '}';
     }
