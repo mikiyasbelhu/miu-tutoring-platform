@@ -1,9 +1,13 @@
 package edu.miu.cs.cs425.project.miututoring.api.service.impl;
 
+import edu.miu.cs.cs425.project.miututoring.api.model.Student;
 import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
 import edu.miu.cs.cs425.project.miututoring.api.repository.TutorialGroupRepository;
 import edu.miu.cs.cs425.project.miututoring.api.service.TutorialGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,11 @@ public class TutorialGroupServiceImpl implements TutorialGroupService {
     @Override
     public List<TutorialGroup> getAllTutorialGroups() {
         return (List<TutorialGroup>)tutorialGroupRepository.findAll();
+    }
+
+    @Override
+    public Page<TutorialGroup> getAllTutorialGroupsPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
+        return tutorialGroupRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE :pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 
     @Override
