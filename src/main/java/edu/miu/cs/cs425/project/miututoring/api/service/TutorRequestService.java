@@ -10,4 +10,6 @@ public interface TutorRequestService {
     void deleteTutorRequestById(Integer tutorRequestId);
     TutorRequest saveTutorRequest(TutorRequest tutorRequest);
     TutorRequest updateTutorRequest(TutorRequest tutorRequest, Integer tutorRequestId);
+    TutorRequest acceptTutorRequest(Integer tutorRequestId);
+    TutorRequest denyTutorRequest(Integer tutorRequestId);
 }
