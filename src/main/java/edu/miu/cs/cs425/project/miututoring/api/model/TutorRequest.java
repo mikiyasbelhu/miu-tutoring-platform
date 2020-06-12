@@ -19,18 +19,21 @@ public class TutorRequest {
     @NotNull(message = "User Id can not be null")
     private Student userId;
 
-   private Status status;
+    private Status status;
+    private String experience;
 
-    public enum Status{
+    public enum Status {
         PENDING, ACCEPTED, REJECTED;
     }
 
     public TutorRequest() {
     }
-    public TutorRequest(Section section, Student student, Status status){
-        this.section =section;
+
+    public TutorRequest(Section section, Student student, Status status, String experience) {
+        this.section = section;
         this.userId = student;
         this.status = Status.PENDING;
+        this.experience = experience;
     }
 
     public Section getSection() {
@@ -57,12 +60,21 @@ public class TutorRequest {
         this.status = status;
     }
 
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
     @Override
     public String toString() {
         return String.format(
-                "TutorRequest [section=%s, userId=%s, status=%s]",
+                "TutorRequest [section=%s, userId=%s, status=%s, experience=%s]",
                 this.section,
                 this.userId,
-                this.status);
+                this.status,
+                this.experience);
     }
 }
