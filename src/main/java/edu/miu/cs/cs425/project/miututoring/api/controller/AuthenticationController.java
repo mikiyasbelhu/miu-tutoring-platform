@@ -53,7 +53,7 @@ public class AuthenticationController {
         final User user = userDetailsService.getByUsername(authenticationRequest.getUsername());
         final List<String> roles = user.getRoles();
         final String jwt = jwtTokenUtil.generateToken(userDetails,roles);
-        final String name = user.getFirstName() + (user.getMiddleName() != "" ? " " + user.getMiddleName(): "") + " " + user.getLastName();
+        final String name = user.getFirstName() + (user.getMiddleName() != "" ? " " + user.getMiddleName(): "") + user.getLastName();
         return ok(new AuthenticationResponse(jwt,userDetails.getUsername(),name,roles));
     }
 
