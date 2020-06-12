@@ -47,6 +47,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public Report getReportByStudentId(Long studentId) {
+        return reportRepository.findByStudent_StudentId(studentId);
+    }
+
+    @Override
     public Report saveReport(Report report) {
         return reportRepository.save(report);
     }
