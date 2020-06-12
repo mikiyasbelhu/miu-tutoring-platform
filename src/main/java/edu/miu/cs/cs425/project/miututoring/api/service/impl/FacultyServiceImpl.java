@@ -3,26 +3,34 @@ package edu.miu.cs.cs425.project.miututoring.api.service.impl;
 import edu.miu.cs.cs425.project.miututoring.api.model.Faculty;
 import edu.miu.cs.cs425.project.miututoring.api.repository.FacultyRepository;
 import edu.miu.cs.cs425.project.miututoring.api.service.FacultyService;
+import edu.miu.cs.cs425.project.miututoring.api.service.NotificationService;
+import edu.miu.cs.cs425.project.miututoring.api.util.EmailGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
 
+    @Value("${spring.mail.username}")
+    private String username;
+
     FacultyRepository facultyRepository;
+    PasswordEncoder passwordEncoder;
+    NotificationService notificationService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    FacultyServiceImpl(FacultyRepository facultyRepository){
+    FacultyServiceImpl(FacultyRepository facultyRepository, PasswordEncoder passwordEncoder, NotificationService notificationService ){
         this.facultyRepository = facultyRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -33,7 +41,6 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Page<Faculty> getAllFacultyPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
         return facultyRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE :pageSize, !sortBy.equals("") ? Sort.by(sortDesc?Sort.Direction.DESC :Sort.Direction.ASC, sortBy): Sort.unsorted()));
-        
     }
 
     @Override
@@ -44,8 +51,19 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Faculty registerFaculty(Faculty faculty) {
          if(!facultyRepository.findByUsername(faculty.getUsername()).isPresent()){
-             faculty.setPassword(this.passwordEncoder.encode(faculty.getPassword()));
-            return facultyRepository.save(faculty);
+             String plainPasssword = faculty.getPassword();
+             faculty.setPassword(this.passwordEncoder.encode(plainPasssword));
+
+             Faculty savedFaculty = facultyRepository.save(faculty);
+             String message =  EmailGenerator.generateWelcomeMessage(savedFaculty.getFirstName(),savedFaculty.getUsername(),plainPasssword);
+             String body = EmailGenerator.generateEmail(message);
+             try {
+                 notificationService.sendNotification(username,faculty.getUsername(),
+                         body, "MIU Tutoring registration");
+             } catch (MessagingException e) {
+                 System.out.println("Unable to send email");
+             }
+             return savedFaculty;
         }
         return null;
     }
