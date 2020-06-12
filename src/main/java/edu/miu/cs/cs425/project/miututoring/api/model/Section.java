@@ -20,34 +20,31 @@ public class Section {
     @NotBlank(message = "Class room is required")
     private String classRoom;
 
-    //@NotBlank(Is not working for the Enums!!!)
     @NotNull
     private BlockMonth month;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "courseId")
-    private Course course;                                                 //assuming the relation is one directional,
+    private Course course;
 
-    @ManyToOne(cascade = CascadeType.ALL)                                   //(name ="faculty_by",nullable=false)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "section_id")
     private List<TutorialGroup> tutorialGroup;
 
     public Section() {
     }
 
-    public Section(String sectionName, String classRoom, BlockMonth month, Course course, Faculty faculty
-//            ,List<TutorialGroup> tutorialGroup                            //with this one it will result data persistence exception
-    ) {
+    public Section(String sectionName, String classRoom, BlockMonth month, Course course, Faculty faculty) {
         this.sectionName = sectionName;
         this.classRoom = classRoom;
         this.month = month;
         this.course = course;
         this.faculty = faculty;
-//        this.tutorialGroup = tutorialGroup;
+
     }
 
     public Section(String sectionName, String classRoom, BlockMonth month){
