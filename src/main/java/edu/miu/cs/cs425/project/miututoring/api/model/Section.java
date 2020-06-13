@@ -20,15 +20,14 @@ public class Section {
     @NotBlank(message = "Class room is required")
     private String classRoom;
 
-    //@NotBlank(Is not working for the Enums!!!)
     @NotNull
     private String month;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "courseId")
-    private Course course;                                                 //assuming the relation is one directional,
+    private Course course;
 
-    @ManyToOne(cascade = CascadeType.ALL)                                   //(name ="faculty_by",nullable=false)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
