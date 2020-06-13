@@ -16,7 +16,6 @@ public class Enrollment {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer enrollmentId;
 
-
     @NotNull
     private RoleType role;
 
@@ -25,7 +24,11 @@ public class Enrollment {
     private Section section;
 
     @ManyToOne
-    @JoinColumn(name="tutorial_Group")
+//    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "tutorial_Group")
     public TutorialGroup tutorialGroup;
 
     public Enrollment() {
@@ -35,11 +38,6 @@ public class Enrollment {
         this.role = role;
         this.section = section;
         this.tutorialGroup = tutorialGroup;
-    }
-
-
-    public Enrollment (RoleType role){
-        this.role = role;
     }
 
     public Integer getEnrollmentId() {
