@@ -15,9 +15,9 @@ public class TutorRequest {
     private Section section;
 
     @OneToOne
-    @JoinColumn(name = "student")
-    @NotNull(message = "User Id can not be null")
-    private Student userId;
+    @JoinColumn(name = "enrollment")
+    @NotNull(message = "Enrollment Id can not be null")
+    private Enrollment enrollment;
 
     private Status status;
     private String experience;
@@ -29,9 +29,9 @@ public class TutorRequest {
     public TutorRequest() {
     }
 
-    public TutorRequest(Section section, Student student, Status status, String experience) {
+    public TutorRequest(Section section, Enrollment enrollment, Status status, String experience) {
         this.section = section;
-        this.userId = student;
+        this.enrollment = enrollment;
         this.status = Status.PENDING;
         this.experience = experience;
     }
@@ -44,12 +44,12 @@ public class TutorRequest {
         this.section = section;
     }
 
-    public Student getUserId() {
-        return userId;
+    public Enrollment getEnrollment() {
+        return enrollment;
     }
 
-    public void setUserId(Student userId) {
-        this.userId = userId;
+    public void setUserId(Enrollment enrollment) {
+        this.enrollment = enrollment;
     }
 
     public Status getStatus() {
@@ -73,7 +73,7 @@ public class TutorRequest {
         return String.format(
                 "TutorRequest [section=%s, userId=%s, status=%s, experience=%s]",
                 this.section,
-                this.userId,
+                this.enrollment,
                 this.status,
                 this.experience);
     }

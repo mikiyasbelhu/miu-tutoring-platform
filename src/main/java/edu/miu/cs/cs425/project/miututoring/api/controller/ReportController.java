@@ -27,7 +27,7 @@ public class ReportController {
 
     @GetMapping(value = "/list")
     public Page<Report> listReports(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                    @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
         return reportService.getAllReportsPaged(page, itemsPerPage, sortBy, sortDesc);
     }
 
