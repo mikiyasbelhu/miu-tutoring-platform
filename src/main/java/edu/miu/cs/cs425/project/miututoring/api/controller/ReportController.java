@@ -32,8 +32,8 @@ public class ReportController {
     }
 
     @GetMapping(value = "/getbygroup")
-    public List<Report> getReportInATutorialGroup(TutorialGroup tutorialGroup) {
-        return reportService.getAllReportsInATutorialGroup(tutorialGroup);
+    public List<Report> getReportInATutorialGroup(Long tutorialGroupId) {
+        return reportService.getAllReportsInATutorialGroup(tutorialGroupId);
     }
 
     @GetMapping(value = "/get/{reportId}")
