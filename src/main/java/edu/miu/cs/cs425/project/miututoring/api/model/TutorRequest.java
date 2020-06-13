@@ -52,10 +52,6 @@ public class TutorRequest {
         this.enrollment = enrollment;
     }
 
-    public void setUserId(Enrollment enrollment) {
-        this.enrollment = enrollment;
-    }
-
     public Status getStatus() {
         return status;
     }
