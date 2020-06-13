@@ -57,12 +57,12 @@ public class FacultyServiceImpl implements FacultyService {
              Faculty savedFaculty = facultyRepository.save(faculty);
              String message =  EmailGenerator.generateWelcomeMessage(savedFaculty.getFirstName(),savedFaculty.getUsername(),plainPasssword);
              String body = EmailGenerator.generateEmail(message);
-             try {
-                 notificationService.sendNotification(username,faculty.getUsername(),
-                         body, "MIU Tutoring registration");
-             } catch (MessagingException e) {
-                 System.out.println("Unable to send email");
-             }
+//             try {
+//                 notificationService.sendNotification(username,faculty.getUsername(),
+//                         body, "MIU Tutoring registration");
+//             } catch (MessagingException e) {
+//                 System.out.println("Unable to send email");
+//             }
              return savedFaculty;
         }
         return null;

@@ -28,7 +28,8 @@ public class Student extends User {
     @OneToOne(cascade = CascadeType.PERSIST)
     TutorRequest tutorRequest;
 
-
+    @OneToMany
+    List<Enrollment> enrollments;
 
     public Student() {
     }
@@ -63,5 +64,13 @@ public class Student extends User {
     public void setEnrollmentDate(LocalDate enrollmentDate) {
         this.enrollmentDate = enrollmentDate;
     }
+
+//    public List<Enrollment> getEnrollments() {
+//        return enrollments;
+//    }
+//
+//    public void setEnrollments(List<Enrollment> enrollments) {
+//        this.enrollments = enrollments;
+//    }
 
 }

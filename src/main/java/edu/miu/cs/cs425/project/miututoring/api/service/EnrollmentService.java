@@ -1,8 +1,6 @@
 package edu.miu.cs.cs425.project.miututoring.api.service;
 
 import edu.miu.cs.cs425.project.miututoring.api.model.Enrollment;
-import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
-
 
 import java.util.List;
 
@@ -13,4 +11,5 @@ public interface EnrollmentService {
     Enrollment updateEnrollment(Enrollment updatedEnrollment, Integer enrollmentId);
     void deleteEnrollmentById(Integer enrollmentId);
     Enrollment registerEnrollment(Enrollment enrollment);
+    List<Enrollment> getEnrollmentByStudent(Long studentId);
 }

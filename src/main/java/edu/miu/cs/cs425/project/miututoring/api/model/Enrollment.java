@@ -2,44 +2,54 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrollment {
-    public enum RoleType{
+    public enum RoleType {
         TUTEE,
         TUTOR;
     }
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer enrollmentId;
-
 
     @NotNull
     private RoleType role;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "section_id")
     private Section section;
 
     @ManyToOne
-    @JoinColumn(name="tutorial_Group")
+//    @JoinColumn(name = "student_id")
+    private Student student;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "tutorial_Group")
     public TutorialGroup tutorialGroup;
+
+    @OneToOne
+    @JoinColumn(name = "tutor_request")
+    private TutorRequest tutorRequest;
 
     public Enrollment() {
     }
 
-    public Enrollment(  RoleType role, Section section,TutorialGroup tutorialGroup) {
+    public Enrollment(Student student, RoleType role, Section section, TutorialGroup tutorialGroup) {
+        this.student = student;
         this.role = role;
         this.section = section;
         this.tutorialGroup = tutorialGroup;
     }
 
+    public Student getStudent() {
+        return student;
+    }
 
-    public Enrollment (RoleType role){
-        this.role = role;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public Integer getEnrollmentId() {
@@ -74,11 +84,20 @@ public class Enrollment {
         this.tutorialGroup = tutorialGroup;
     }
 
+    public TutorRequest getTutorRequest() {
+        return tutorRequest;
+    }
+
+    public void setTutorRequest(TutorRequest tutorRequest) {
+        this.tutorRequest = tutorRequest;
+    }
+
     @Override
     public String toString() {
         return "Enrollment{" +
                 "role=" + role +
                 ", section=" + section +
+                ", student=" + student +
                 ", tutorialGroup=" + tutorialGroup +
                 '}';
     }
