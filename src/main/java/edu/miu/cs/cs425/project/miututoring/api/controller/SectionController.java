@@ -3,11 +3,11 @@ package edu.miu.cs.cs425.project.miututoring.api.controller;
 import edu.miu.cs.cs425.project.miututoring.api.model.Section;
 import edu.miu.cs.cs425.project.miututoring.api.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/section",produces = MediaType.APPLICATION_JSON_VALUE)
@@ -17,10 +17,13 @@ public class SectionController {
     public SectionController(SectionService sectionService) {
         this.sectionService = sectionService;
     }
+
     @GetMapping(value="/list")
-    public List<Section>listOfSections(){
-        return sectionService.getAllSections();
+    public Page<Section> listsections(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
+                                      @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc){
+        return sectionService.getAllSectionsPaged(page,itemsPerPage,sortBy,sortDesc);
     }
+
     @RequestMapping(value="/get/{sectionId}")
     public Section getSection(@PathVariable Integer sectionId){
         return sectionService.getSectionById(sectionId);

@@ -27,7 +27,7 @@ public class CourseController {
 
     @GetMapping(value = "/list")
     public Page<Course> getListOfCourses(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                         @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc){
+                                         @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc){
             return courseService.getAllCoursesPaged(page, itemsPerPage, sortBy, sortDesc);
     }
 
@@ -53,7 +53,7 @@ public class CourseController {
 
     @GetMapping(value = {"/search"})
     public Page<Course> searchCourse(@RequestParam String courseName, @RequestParam String courseNumber, @RequestParam Integer courseCredit,@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                     @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
         return courseService.searchCourses(courseName,courseNumber,courseCredit, page, itemsPerPage, sortBy, sortDesc);
     }
 

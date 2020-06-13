@@ -56,7 +56,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Page<Course> getAllCoursesPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
-        return courseRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE : pageSize, Sort.by(sortDesc ? Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+        return courseRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE : pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 
     @Override

@@ -38,23 +38,28 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        // Admin
+        List<User> usersList = new ArrayList<User>(Arrays.asList(
+                new User("admin@miu.edu","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY")))
+        ));
+        saveUsers(usersList);
+
+        // Student
         Student student1 = new Student("student@miu.edu","student","000-61-0001", "Anna", "Lynn", "Smith", 3.45, LocalDate.of(2019,5,24));
         Student student2 = new Student("tutor@miu.edu","tutor123","000-61-0002", "John", "Trester", "George", 3.24, LocalDate.of(2019,5,21));
+        saveStudent(student1);
+        saveStudent(student2);
 
+        // Faculty
         Faculty faculty1 = new Faculty("faculty@miu.edu","faculty", "Obinna", "A", "Kalu","Software Engineeing CS425");
         saveFaculty(faculty1);
 
-        saveStudent(student1);
-        saveStudent(student2);
-        TutorialGroup tutorialGroup1 = new TutorialGroup(1L,"CS425");
-        TutorialGroup tutorialGroup2 = new TutorialGroup(2L,"CS575");
+        // Tutorial Group
+        TutorialGroup tutorialGroup1 = new TutorialGroup(1L,"CS425",null);
+        TutorialGroup tutorialGroup2 = new TutorialGroup(2L,"CS575",null);
         saveTutorialGroup(tutorialGroup1);
         saveTutorialGroup(tutorialGroup2);
-        List<User> usersList = new ArrayList<User>(Arrays.asList(
-                new User("admin@miu.edu","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY")))
-
-        ));
-        saveUsers(usersList);
     }
 
     public void saveStudent(Student student){
