@@ -1,5 +1,7 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -7,9 +9,6 @@ import java.util.List;
 
 @Entity
 public class Section {
-    public enum BlockMonth {
-        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +17,7 @@ public class Section {
     private String sectionName;
 
     @OneToMany(mappedBy = "section")
+    @JsonIgnore
     private List<TutorRequest> tutorRequests;
 
     @NotBlank(message = "Class room is required")
@@ -40,13 +40,12 @@ public class Section {
     public Section() {
     }
 
-    public Section(String sectionName, String classRoom, BlockMonth month, Course course, Faculty faculty) {
+    public Section(String sectionName, String classRoom, String month, Course course, Faculty faculty) {
         this.sectionName = sectionName;
         this.classRoom = classRoom;
         this.month = month;
         this.course = course;
         this.faculty = faculty;
-
     }
 
     public Section(String sectionName, String classRoom, String month){

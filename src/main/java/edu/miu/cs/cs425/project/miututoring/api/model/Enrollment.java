@@ -2,7 +2,6 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrollment {
@@ -15,7 +14,6 @@ public class Enrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer enrollmentId;
 
-    @NotNull
     private RoleType role;
 
     @OneToOne(cascade = CascadeType.MERGE)
@@ -23,21 +21,24 @@ public class Enrollment {
     private Section section;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+//    @JoinColumn(name = "student_id")
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "tutorial_Group")
     public TutorialGroup tutorialGroup;
+
+    @OneToOne
+    @JoinColumn(name = "tutor_request")
+    private TutorRequest tutorRequest;
 
     public Enrollment() {
     }
 
-    public Enrollment(Student student, RoleType role, Section section, TutorialGroup tutorialGroup) {
+    public Enrollment(Student student, Section section) {
         this.student = student;
-        this.role = role;
+        this.role = RoleType.TUTEE;
         this.section = section;
-        this.tutorialGroup = tutorialGroup;
     }
 
     public Student getStudent() {
@@ -46,10 +47,6 @@ public class Enrollment {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public Enrollment(RoleType role) {
-        this.role = role;
     }
 
     public Integer getEnrollmentId() {
@@ -82,6 +79,14 @@ public class Enrollment {
 
     public void setTutorialGroup(TutorialGroup tutorialGroup) {
         this.tutorialGroup = tutorialGroup;
+    }
+
+    public TutorRequest getTutorRequest() {
+        return tutorRequest;
+    }
+
+    public void setTutorRequest(TutorRequest tutorRequest) {
+        this.tutorRequest = tutorRequest;
     }
 
     @Override

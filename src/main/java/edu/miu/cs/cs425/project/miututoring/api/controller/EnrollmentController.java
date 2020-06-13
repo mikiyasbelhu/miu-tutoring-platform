@@ -36,4 +36,8 @@ public class EnrollmentController {
     public void deleteEnrollment(@PathVariable Integer enrollmentId){
         enrollmentService.deleteEnrollmentById(enrollmentId);
     }
+    @GetMapping(value="/getbystudent/{studentId}")
+    public List<Enrollment> getEnrollmentByStudent(@PathVariable Long studentId) {
+        return enrollmentService.getEnrollmentByStudent(studentId);
+    }
 }
