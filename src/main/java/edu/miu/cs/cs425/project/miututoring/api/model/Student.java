@@ -1,5 +1,6 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,12 +24,14 @@ public class Student extends User {
     private LocalDate enrollmentDate;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     List<Report> reports;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     TutorRequest tutorRequest;
 
     @OneToMany
+    @JsonIgnore
     List<Enrollment> enrollments;
 
     public Student() {

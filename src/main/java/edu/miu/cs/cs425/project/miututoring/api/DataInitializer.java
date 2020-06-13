@@ -76,14 +76,14 @@ public class DataInitializer implements CommandLineRunner {
         saveTutorialGroup(tutorialGroup2);
 
         // Enrollment
-        Enrollment.RoleType tutor= Enrollment.RoleType.TUTOR;
-        Enrollment enrollment = new Enrollment(student1, tutor, section, tutorialGroup1);
+        Enrollment enrollment = new Enrollment(student1, section);
+        enrollment.setTutorialGroup(tutorialGroup1);
         saveEnrollment(enrollment);
 
-//        List<Enrollment> list = new ArrayList<>();
-//        list.add(enrollment);
-//        tutorialGroup1.setEnrollments(list);
-//        saveTutorialGroup(tutorialGroup1);
+        List<Enrollment> list = new ArrayList<>();
+        list.add(enrollment);
+        tutorialGroup1.setEnrollments(list);
+        saveTutorialGroup(tutorialGroup1);
 
     }
 
