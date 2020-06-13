@@ -1,5 +1,7 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,6 +17,7 @@ public class Section {
     private String sectionName;
 
     @OneToMany(mappedBy = "section")
+    @JsonIgnore
     private List<TutorRequest> tutorRequests;
 
     @NotBlank(message = "Class room is required")
@@ -32,6 +35,7 @@ public class Section {
     private Faculty faculty;
 
     @OneToMany
+    @JsonIgnore
     private List<TutorialGroup> tutorialGroup;
 
     public Section() {
