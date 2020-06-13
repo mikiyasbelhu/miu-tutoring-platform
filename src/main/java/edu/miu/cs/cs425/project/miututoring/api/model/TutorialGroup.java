@@ -32,8 +32,7 @@ public class TutorialGroup {
     public TutorialGroup() {
     }
 
-    public TutorialGroup(Long tutorialGroupId, @NotBlank String tutorialGroupNumber, Section section) {
-        this.tutorialGroupId = tutorialGroupId;
+    public TutorialGroup(@NotBlank String tutorialGroupNumber, Section section) {
         this.tutorialGroupNumber = tutorialGroupNumber;
         this.section = section;
     }
@@ -60,5 +59,13 @@ public class TutorialGroup {
 
     public void setSection(Section section) {
         this.section = section;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }

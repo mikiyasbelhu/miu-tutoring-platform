@@ -7,9 +7,6 @@ import java.util.List;
 
 @Entity
 public class Section {
-    public enum BlockMonth {
-        JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,15 +38,12 @@ public class Section {
     public Section() {
     }
 
-    public Section(String sectionName, String classRoom, String month, Course course, Faculty faculty
-//            ,List<TutorialGroup> tutorialGroup                            //with this one it will result data persistence exception
-    ) {
+    public Section(String sectionName, String classRoom, String month, Course course, Faculty faculty) {
         this.sectionName = sectionName;
         this.classRoom = classRoom;
         this.month = month;
         this.course = course;
         this.faculty = faculty;
-//        this.tutorialGroup = tutorialGroup;
     }
 
     public Section(String sectionName, String classRoom, String month){

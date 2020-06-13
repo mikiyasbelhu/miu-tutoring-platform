@@ -1,13 +1,8 @@
 package edu.miu.cs.cs425.project.miututoring.api;
 
-import edu.miu.cs.cs425.project.miututoring.api.model.Faculty;
-import edu.miu.cs.cs425.project.miututoring.api.model.Student;
-import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
-import edu.miu.cs.cs425.project.miututoring.api.model.User;
-import edu.miu.cs.cs425.project.miututoring.api.service.FacultyService;
-import edu.miu.cs.cs425.project.miututoring.api.service.StudentService;
-import edu.miu.cs.cs425.project.miututoring.api.repository.TutorialGroupRepository;
-import edu.miu.cs.cs425.project.miututoring.api.service.MyUserDetailsService;
+import edu.miu.cs.cs425.project.miututoring.api.model.*;
+import edu.miu.cs.cs425.project.miututoring.api.service.*;
+import edu.miu.cs.cs425.project.miututoring.api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,27 +16,36 @@ import java.util.List;
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    @Autowired
     FacultyService facultyService;
-
-    @Autowired
     StudentService studentService;
-
-    @Autowired
-    TutorialGroupRepository tutorialGroupRepository;
-
-    @Autowired
     MyUserDetailsService userService;
+    CourseService courseService;
+    SectionService sectionService;
+    TutorialGroupRepository tutorialGroupRepository;
+    EnrollmentService enrollmentService;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    public DataInitializer(FacultyService facultyService, StudentService studentService,
+                           MyUserDetailsService myUserDetailsService, CourseService courseService,
+                           SectionService sectionService, TutorialGroupRepository tutorialGroupRepository,
+                           PasswordEncoder passwordEncoder, EnrollmentService enrollmentService){
+        this.studentService = studentService;
+        this.facultyService = facultyService;
+        this.userService = myUserDetailsService;
+        this.courseService = courseService;
+        this.sectionService = sectionService;
+        this.tutorialGroupRepository = tutorialGroupRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.enrollmentService = enrollmentService;
+    }
 
     @Override
     public void run(String... args) throws Exception {
 
         // Admin
         List<User> usersList = new ArrayList<User>(Arrays.asList(
-                new User("admin@miu.edu","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY")))
+                new User("rmhbcd@hi2.in","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY")))
         ));
         saveUsers(usersList);
 
@@ -55,25 +59,58 @@ public class DataInitializer implements CommandLineRunner {
         Faculty faculty1 = new Faculty("faculty@miu.edu","faculty", "Obinna", "A", "Kalu","Software Engineeing CS425");
         saveFaculty(faculty1);
 
+        // Course        
+        Course course = new Course("CS425", "Software Engineering", 4);
+        saveCourse(course);
+
+        // Section
+        Section section = new Section("CS425-2020-06-01", "Library 109", "2020-06", course, faculty1);
+        saveSection(section);
+
         // Tutorial Group
-        TutorialGroup tutorialGroup1 = new TutorialGroup(1L,"CS425",null);
-        TutorialGroup tutorialGroup2 = new TutorialGroup(2L,"CS575",null);
+        TutorialGroup tutorialGroup1 = new TutorialGroup("CS425",section);
+        TutorialGroup tutorialGroup2 = new TutorialGroup("CS575",section);
         saveTutorialGroup(tutorialGroup1);
         saveTutorialGroup(tutorialGroup2);
+
+        // Enrollment
+        Enrollment.RoleType tutor= Enrollment.RoleType.TUTOR;
+        Enrollment enrollment = new Enrollment(student1, tutor, section, tutorialGroup1);
+        saveEnrollment(enrollment);
+
+//        List<Enrollment> list = new ArrayList<>();
+//        list.add(enrollment);
+//        tutorialGroup1.setEnrollments(list);
+//        saveTutorialGroup(tutorialGroup1);
+
     }
 
     public void saveStudent(Student student){
         studentService.registerStudent(student);
     }
+
     public void saveFaculty(Faculty faculty){
         facultyService.registerFaculty(faculty);
+    }
+
+    public void saveUsers(List<User> users){
+        userService.saveUsers(users);
+    }
+
+    public void saveCourse(Course course){
+        courseService.saveCourse(course);
+    }
+
+    public void saveSection(Section section){
+        sectionService.registerSection(section);
     }
 
     public void saveTutorialGroup(TutorialGroup tutorialGroup){
         tutorialGroupRepository.save(tutorialGroup);
     }
-    public void saveUsers(List<User> users){
-        userService.saveUsers(users);
+
+    public void saveEnrollment(Enrollment enrollment){
+        enrollmentService.saveEnrollment(enrollment);
     }
 
 }
