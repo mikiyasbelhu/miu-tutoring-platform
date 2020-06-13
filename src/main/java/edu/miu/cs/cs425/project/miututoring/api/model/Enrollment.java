@@ -2,7 +2,6 @@ package edu.miu.cs.cs425.project.miututoring.api.model;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrollment {
@@ -15,7 +14,6 @@ public class Enrollment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer enrollmentId;
 
-    @NotNull
     private RoleType role;
 
     @OneToOne(cascade = CascadeType.MERGE)
@@ -37,11 +35,10 @@ public class Enrollment {
     public Enrollment() {
     }
 
-    public Enrollment(Student student, RoleType role, Section section, TutorialGroup tutorialGroup) {
+    public Enrollment(Student student, Section section) {
         this.student = student;
-        this.role = role;
+        this.role = RoleType.TUTEE;
         this.section = section;
-        this.tutorialGroup = tutorialGroup;
     }
 
     public Student getStudent() {

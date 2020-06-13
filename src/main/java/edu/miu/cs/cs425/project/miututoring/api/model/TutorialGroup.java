@@ -1,5 +1,7 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -27,6 +29,7 @@ public class TutorialGroup {
 
     //to be checked
     @OneToMany(mappedBy = "tutorialGroup")
+    @JsonIgnore
     private List<Enrollment> enrollments;
 
     public TutorialGroup() {
