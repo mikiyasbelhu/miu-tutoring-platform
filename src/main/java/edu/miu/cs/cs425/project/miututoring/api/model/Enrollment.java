@@ -28,6 +28,10 @@ public class Enrollment {
     @JoinColumn(name="tutorial_Group")
     public TutorialGroup tutorialGroup;
 
+    @OneToOne
+    @JoinColumn(name = "tutor_request")
+    private TutorRequest tutorRequest;
+
     public Enrollment() {
     }
 
@@ -72,6 +76,14 @@ public class Enrollment {
 
     public void setTutorialGroup(TutorialGroup tutorialGroup) {
         this.tutorialGroup = tutorialGroup;
+    }
+
+    public TutorRequest getTutorRequest() {
+        return tutorRequest;
+    }
+
+    public void setTutorRequest(TutorRequest tutorRequest) {
+        this.tutorRequest = tutorRequest;
     }
 
     @Override
