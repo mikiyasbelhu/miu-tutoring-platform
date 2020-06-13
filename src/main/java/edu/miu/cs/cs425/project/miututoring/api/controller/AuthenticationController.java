@@ -2,6 +2,7 @@ package edu.miu.cs.cs425.project.miututoring.api.controller;
 
 import edu.miu.cs.cs425.project.miututoring.api.model.AuthenticationRequest;
 import edu.miu.cs.cs425.project.miututoring.api.model.AuthenticationResponse;
+import edu.miu.cs.cs425.project.miututoring.api.model.User;
 import edu.miu.cs.cs425.project.miututoring.api.service.MyUserDetailsService;
 import edu.miu.cs.cs425.project.miututoring.api.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,11 @@ public class AuthenticationController {
         final UserDetails userDetails = userDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
 
-        final List<String> roles = userDetailsService.getByUsername(authenticationRequest.getUsername()).getRoles();
+        final User user = userDetailsService.getByUsername(authenticationRequest.getUsername());
+        final List<String> roles = user.getRoles();
         final String jwt = jwtTokenUtil.generateToken(userDetails,roles);
-
-        return ok(new AuthenticationResponse(jwt,userDetails.getUsername(),roles));
+        final String name = user.getFirstName() + (user.getMiddleName() != "" ? " " + user.getMiddleName(): "") + user.getLastName();
+        return ok(new AuthenticationResponse(jwt,userDetails.getUsername(),name,roles));
     }
 
     @GetMapping("/me")

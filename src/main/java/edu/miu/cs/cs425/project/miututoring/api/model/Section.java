@@ -17,11 +17,14 @@ public class Section {
 
     private String sectionName;
 
+    @OneToMany(mappedBy = "section")
+    private List<TutorRequest> tutorRequests;
+
     @NotBlank(message = "Class room is required")
     private String classRoom;
 
     @NotNull
-    private BlockMonth month;
+    private String month;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "courseId")
@@ -31,8 +34,7 @@ public class Section {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "section_id")
+    @OneToMany
     private List<TutorialGroup> tutorialGroup;
 
     public Section() {
@@ -47,7 +49,7 @@ public class Section {
 
     }
 
-    public Section(String sectionName, String classRoom, BlockMonth month){
+    public Section(String sectionName, String classRoom, String month){
         this.sectionName = sectionName;
         this.classRoom = classRoom;
         this.month = month;
@@ -77,11 +79,11 @@ public class Section {
         this.classRoom = classRoom;
     }
 
-    public BlockMonth getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(BlockMonth month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

@@ -17,35 +17,36 @@ import java.util.List;
 @RequestMapping(value = "/api/v1/report", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReportController {
 
+    @Autowired
     ReportService reportService;
 
-    @Autowired
+
     public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
 
     @GetMapping(value = "/list")
     public Page<Report> listReports(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                     @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
         return reportService.getAllReportsPaged(page, itemsPerPage, sortBy, sortDesc);
     }
 
-    @GetMapping(value = {"/listInGroup"})
+    @GetMapping(value = "/getbygroup")
     public List<Report> getReportInATutorialGroup(TutorialGroup tutorialGroup) {
         return reportService.getAllReportsInATutorialGroup(tutorialGroup);
     }
 
-    @GetMapping(value = "get/{reportId}")
+    @GetMapping(value = "/get/{reportId}")
     public Report getReportById(@PathVariable Integer reportId){
         return reportService.getReportById(reportId);
     }
 
-    @PutMapping(value = "edit/{reportId}")
+    @PutMapping(value = "/edit/{reportId}")
     public Report updateReport(@Valid @RequestBody Report updatedReport, @PathVariable Integer reportId){
         return reportService.updateReport(updatedReport,reportId);
     }
 
-    @DeleteMapping(value = "delete/{reportId}")
+    @DeleteMapping(value = "/delete/{reportId}")
     public void deleteReportById(@PathVariable Integer reportId){
         reportService.deleteReportById(reportId);
     }
@@ -57,7 +58,7 @@ public class ReportController {
 
     @GetMapping(value = {"/search"})
     public Page<Report> searchReport(@RequestParam String searchQuery, @RequestParam Student student, @RequestParam Course course, @RequestParam TutorialGroup tutorialGroup, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
-                                     @RequestParam String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
         return reportService.searchReports(searchQuery, student, course, tutorialGroup, page, itemsPerPage, sortBy, sortDesc);
     }
 }

@@ -18,9 +18,10 @@ import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
 
+    @Autowired
     ReportRepository reportRepository;
 
-    @Autowired
+
     public ReportServiceImpl(ReportRepository reportRepository) {
         this.reportRepository = reportRepository;
     }
@@ -32,7 +33,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Page<Report> getAllReportsPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
-        return reportRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE: pageSize, Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
+        return reportRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE: pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 
     @Override
