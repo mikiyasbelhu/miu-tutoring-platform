@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     @NotEmpty

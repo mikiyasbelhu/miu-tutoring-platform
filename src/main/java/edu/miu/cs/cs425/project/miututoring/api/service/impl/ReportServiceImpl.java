@@ -48,7 +48,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public Report getReportByStudentId(Long studentId) {
-        return reportRepository.findByStudent_StudentId(studentId);
+        return reportRepository.findByStudent_Id(studentId);
     }
 
     @Override

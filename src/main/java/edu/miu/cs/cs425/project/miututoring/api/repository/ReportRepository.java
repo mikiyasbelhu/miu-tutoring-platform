@@ -15,6 +15,6 @@ import java.util.List;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Integer> {
     List<Report> findAllByTutorialGroupTutorialGroupIdContaining(long tutorialGroup);
-    Report findByStudent_StudentId(Long studentId);
+    Report findByStudent_Id(Long studentId);
     Page<Report> findAllByReportContainingOrStudentContainingOrCourseContainingOrTutorialGroupContaining(String text, Student student, Course course, TutorialGroup tutorialGroup, Pageable pageable);
 }

@@ -48,6 +48,10 @@ public class TutorRequest {
         return enrollment;
     }
 
+    public void setEnrollment(Enrollment enrollment) {
+        this.enrollment = enrollment;
+    }
+
     public void setUserId(Enrollment enrollment) {
         this.enrollment = enrollment;
     }
