@@ -1,5 +1,6 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -22,13 +23,32 @@ public class Student extends User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate enrollmentDate;
 
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
+
+    public TutorRequest getTutorRequest() {
+        return tutorRequest;
+    }
+
+    public void setTutorRequest(TutorRequest tutorRequest) {
+        this.tutorRequest = tutorRequest;
+    }
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
+    @JsonIgnore
     List<Report> reports;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     TutorRequest tutorRequest;
 
-
+    @OneToMany
+    @JsonIgnore
+    List<Enrollment> enrollments;
 
     public Student() {
     }
@@ -63,5 +83,13 @@ public class Student extends User {
     public void setEnrollmentDate(LocalDate enrollmentDate) {
         this.enrollmentDate = enrollmentDate;
     }
+
+//    public List<Enrollment> getEnrollments() {
+//        return enrollments;
+//    }
+//
+//    public void setEnrollments(List<Enrollment> enrollments) {
+//        this.enrollments = enrollments;
+//    }
 
 }

@@ -10,7 +10,7 @@ public class Report {
     private Integer reportId;
 
     @ManyToOne
-    @JoinColumn(name = "student", nullable = false)
+    @JoinColumn(name = "student")
     @NotNull(message = "*Student is Required")
     private Student student;
 

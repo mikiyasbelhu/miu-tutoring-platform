@@ -42,7 +42,7 @@ public class TutorRequestImpl implements TutorRequestService {
         return tutorRequestRepository.findById(tutorRequestId).map(tutorRequest -> {
             tutorRequest.setSection(updatedTutorRequest.getSection());
             tutorRequest.setStatus(updatedTutorRequest.getStatus());
-            tutorRequest.setUserId(updatedTutorRequest.getUserId());
+            tutorRequest.setEnrollment(updatedTutorRequest.getEnrollment());
             return tutorRequestRepository.save(tutorRequest);
         }).orElseGet(()-> tutorRequestRepository.save(updatedTutorRequest));
     }

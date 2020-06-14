@@ -10,13 +10,13 @@ import java.util.List;
 
 @Service
 public class EnrollmentServiceImpl implements EnrollmentService {
+
     EnrollmentRepository enrollmentRepository;
 
     @Autowired
     public EnrollmentServiceImpl(EnrollmentRepository enrollmentRepository) {
         this.enrollmentRepository = enrollmentRepository;
     }
-
 
     @Override
     public List<Enrollment> getAllEnrollment() {
@@ -47,12 +47,16 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public void deleteEnrollmentById(Integer enrollmentId) {
         enrollmentRepository.deleteById(enrollmentId);
-
     }
 
     @Override
     public Enrollment registerEnrollment(Enrollment enrollment) {
         return enrollmentRepository.save(enrollment);
+    }
+
+    @Override
+    public List<Enrollment> getEnrollmentByStudent(Long studentId) {
+        return enrollmentRepository.findAllByStudent_IdEquals(studentId);
     }
 
 }

@@ -57,12 +57,12 @@ public class StudentServiceImpl implements StudentService {
             Student savedStudent = studentRepository.save(student);
             String message =  EmailGenerator.generateWelcomeMessage(savedStudent.getFirstName(),savedStudent.getUsername(),plainPasssword);
             String body = EmailGenerator.generateEmail(message);
-            try {
-                notificationService.sendNotification(username,student.getUsername(),
-                        body, "MIU Tutoring registration");
-            } catch (MessagingException e) {
-                System.out.println("Unable to send email");
-            }
+//            try {
+//                notificationService.sendNotification(username,student.getUsername(),
+//                        body, "MIU Tutoring registration");
+//            } catch (MessagingException e) {
+//                System.out.println("Unable to send email");
+//            }
             return savedStudent;
         }
         return null;
