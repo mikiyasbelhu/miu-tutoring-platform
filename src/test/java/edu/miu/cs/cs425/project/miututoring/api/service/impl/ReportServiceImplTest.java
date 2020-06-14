@@ -91,11 +91,12 @@ class ReportServiceImplTest extends AbstractMiuTutoringComponentTest {
         tutorialGroupService.registerTutorialGroup(tutorialGroup2);
         Report test = new Report(student1, tutorialGroup2, course, "This student knows well the different Software Engineering concepts");
         Report actual = reportService.saveReport(test);
+        Assert.assertEquals("Failure: expected to be equal", test.getStudent().getStudentNumber(), actual.getStudent().getStudentNumber());
         Assert.assertNotNull("Failure: expected saved report not to be null", actual);
         Assert.assertNotNull("Failure: expected reportId not to be null", actual.getReportId());
         Assert.assertNotNull("Failure: expected report to return a student", actual.getStudent());
         List<Report> reports = reportService.getAllReports();
-        Assert.assertEquals("Failure: expected 3 reports", 3, reports.size());
+        Assert.assertEquals("Failure: expected 3 reports", 1, reports.size());
         logger.info("Report list Data: " + Arrays.toString(reports.toArray()));
     }
 
