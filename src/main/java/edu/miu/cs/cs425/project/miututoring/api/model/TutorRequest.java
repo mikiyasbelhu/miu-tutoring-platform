@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class TutorRequest {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer requestId;
@@ -29,11 +30,19 @@ public class TutorRequest {
     public TutorRequest() {
     }
 
-    public TutorRequest(Section section, Enrollment enrollment, Status status, String experience) {
+    public TutorRequest(Section section, Enrollment enrollment, String experience) {
         this.section = section;
         this.enrollment = enrollment;
         this.status = Status.PENDING;
         this.experience = experience;
+    }
+
+    public Integer getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
     }
 
     public Section getSection() {
@@ -49,10 +58,6 @@ public class TutorRequest {
     }
 
     public void setEnrollment(Enrollment enrollment) {
-        this.enrollment = enrollment;
-    }
-
-    public void setUserId(Enrollment enrollment) {
         this.enrollment = enrollment;
     }
 

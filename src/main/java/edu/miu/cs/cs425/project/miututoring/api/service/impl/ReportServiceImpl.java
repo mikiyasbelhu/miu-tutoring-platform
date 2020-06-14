@@ -37,8 +37,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Report> getAllReportsInATutorialGroup(TutorialGroup tutorialGroup) {
-        return reportRepository.findAllByTutorialGroupTutorialGroupIdContaining(tutorialGroup.getTutorialGroupId());
+    public List<Report> getAllReportsInATutorialGroup(Long tutorialGroupId) {
+        return reportRepository.findAllByTutorialGroup_TutorialGroupId(tutorialGroupId);
     }
 
     @Override

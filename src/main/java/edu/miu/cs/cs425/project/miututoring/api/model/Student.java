@@ -23,6 +23,22 @@ public class Student extends User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate enrollmentDate;
 
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
+    }
+
+    public TutorRequest getTutorRequest() {
+        return tutorRequest;
+    }
+
+    public void setTutorRequest(TutorRequest tutorRequest) {
+        this.tutorRequest = tutorRequest;
+    }
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
     @JsonIgnore
     List<Report> reports;

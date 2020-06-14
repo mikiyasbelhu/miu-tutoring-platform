@@ -14,7 +14,7 @@ public interface ReportService {
 
     List<Report> getAllReports();
     Page<Report> getAllReportsPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
-    List<Report> getAllReportsInATutorialGroup(TutorialGroup tutorialGroup);
+    List<Report> getAllReportsInATutorialGroup(Long tutorialGroupId);
     Report getReportById(Integer reportId);
     Report getReportByStudentId(Long studentId);
     Report saveReport(Report report);
