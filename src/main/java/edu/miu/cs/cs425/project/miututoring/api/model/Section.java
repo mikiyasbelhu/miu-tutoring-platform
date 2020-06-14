@@ -49,6 +49,13 @@ public class Section {
         this.faculty = faculty;
     }
 
+    public Section(String sectionName, String classRoom, String month, Course course) {
+        this.sectionName = sectionName;
+        this.classRoom = classRoom;
+        this.month = month;
+        this.course = course;
+    }
+
     public Section(String sectionName, String classRoom, String month){
         this.sectionName = sectionName;
         this.classRoom = classRoom;

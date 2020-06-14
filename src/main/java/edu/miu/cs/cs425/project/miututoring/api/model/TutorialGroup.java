@@ -27,6 +27,10 @@ public class TutorialGroup {
     @JoinColumn(name = "section_id")
     private Section section;
 
+    @ManyToOne
+    @JoinColumn(name = "tutor_id")
+    private Student tutor;
+
     //to be checked
     @OneToMany(mappedBy = "tutorialGroup")
     @JsonIgnore
@@ -70,5 +74,13 @@ public class TutorialGroup {
 
     public void setEnrollments(List<Enrollment> enrollments) {
         this.enrollments = enrollments;
+    }
+
+    public Student getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Student tutor) {
+        this.tutor = tutor;
     }
 }

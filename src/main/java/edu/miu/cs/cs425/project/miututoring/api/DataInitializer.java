@@ -43,47 +43,49 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // Admin
-        List<User> usersList = new ArrayList<User>(Arrays.asList(
-                new User("admin@miu.edu","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN","ROLE_FACULTY")))
-        ));
-        saveUsers(usersList);
+    // Admin
+    List<User> usersList = new ArrayList<User>(Arrays.asList(
+            new User("admin@miu.edu","admin","George","","Cannon", new ArrayList<>(Arrays.asList("ROLE_ADMIN")))
+    ));
+    saveUsers(usersList);
 
-        // Student
-        Student student1 = new Student("student@miu.edu","student","000-61-0001", "Tesfaye", "Lemma", "Girum", 3.45, LocalDate.of(2019,5,24));
-        Student student2 = new Student("tutor@miu.edu","tutor123","000-61-0002", "Haile", "Teshale", "Alemu", 3.24, LocalDate.of(2019,5,21));
-        Student student3 = new Student("rmhbcd@hi2.in","student","000-61-0003", "Tigist", "Gutema", "Kefyalew", 3.84, LocalDate.of(2019,5,21));
-        saveStudent(student1);
-        saveStudent(student2);
-        saveStudent(student3);
+    // Student
+    Student student1 = new Student("student@miu.edu","student","000-61-0001", "Tesfaye", "Lemma", "Girum", 3.45, LocalDate.of(2019,5,24));
+    Student student2 = new Student("tutor@miu.edu","tutor123","000-61-0002", "Haile", "Teshale", "Alemu", 3.24, LocalDate.of(2019,5,21));
+    Student student3 = new Student("rmhbcd@hi2.in","student","000-61-0003", "Tigist", "Gutema", "Kefyalew", 3.84, LocalDate.of(2019,5,21));
+    saveStudent(student1);
+    saveStudent(student2);
+    saveStudent(student3);
 
-        // Faculty
-        Faculty faculty1 = new Faculty("faculty@miu.edu","faculty", "Obinna", "A", "Kalu","Software Engineeing CS425");
-        saveFaculty(faculty1);
+    // Faculty
+    Faculty faculty1 = new Faculty("faculty@miu.edu","faculty", "John", "A", "Peterson","Software Engineeing CS425");
+    saveFaculty(faculty1);
 
-        // Course        
-        Course course = new Course("CS425", "Software Engineering", 4);
-        saveCourse(course);
+    // Course
+    Course course = new Course("CS425", "Software Engineering", 4);
+    saveCourse(course);
 
-        // Section
-        Section section = new Section("CS425-2020-06-01", "Library 109", "2020-06", course, faculty1);
-        saveSection(section);
+    // Section
+    System.out.println(faculty1);
+    Section section = new Section("CS425-2020-06-01", "Library 109", "2020-06", course);
+    section.setFaculty(faculty1);
+    saveSection(section);
 
-        // Tutorial Group
-        TutorialGroup tutorialGroup1 = new TutorialGroup("CS425",section);
-        TutorialGroup tutorialGroup2 = new TutorialGroup("CS575",section);
-        saveTutorialGroup(tutorialGroup1);
-        saveTutorialGroup(tutorialGroup2);
+    // Tutorial Group
+    TutorialGroup tutorialGroup1 = new TutorialGroup("Group 1",section);
+    TutorialGroup tutorialGroup2 = new TutorialGroup("Group 2",section);
+    saveTutorialGroup(tutorialGroup1);
+    saveTutorialGroup(tutorialGroup2);
 
-        // Enrollment
-        Enrollment enrollment = new Enrollment(student1, section);
-        enrollment.setTutorialGroup(tutorialGroup1);
-        saveEnrollment(enrollment);
+    // Enrollment
+    Enrollment enrollment = new Enrollment(student1, section);
+    enrollment.setTutorialGroup(tutorialGroup1);
+    saveEnrollment(enrollment);
 
-        List<Enrollment> list = new ArrayList<>();
-        list.add(enrollment);
-        tutorialGroup1.setEnrollments(list);
-        saveTutorialGroup(tutorialGroup1);
+    List<Enrollment> list = new ArrayList<>();
+    list.add(enrollment);
+    tutorialGroup1.setEnrollments(list);
+    saveTutorialGroup(tutorialGroup1);
 
     }
 
