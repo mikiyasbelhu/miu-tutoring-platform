@@ -16,7 +16,7 @@ public interface CourseService {
     Course saveCourse(Course course);
     Course updateCourse(Course updatedCourse, Integer courseId);
     void deleteCourseById(Integer courseId);
-    Course getCourseById(Integer reportId);
+    Course getCourseById(Integer courseId);
     Page<Course> getAllCoursesPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
     Page<Course> searchCourses(String courseName, String courseNumber, Integer courseCredit, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
 }
