@@ -7,7 +7,8 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface TutorRequestService {
-    Page<TutorRequest> listTutorRequests(int pageNo,Integer pageSize, String sortBy, Boolean sortDesc);
+    List<TutorRequest> listTutorRequests();
+    Page<TutorRequest> listTutorRequestsPaged(int pageNo,Integer pageSize, String sortBy, Boolean sortDesc);
     TutorRequest getTutorRequestById(Integer tutorRequestId);
     void deleteTutorRequestById(Integer tutorRequestId);
     TutorRequest saveTutorRequest(TutorRequest tutorRequest);
