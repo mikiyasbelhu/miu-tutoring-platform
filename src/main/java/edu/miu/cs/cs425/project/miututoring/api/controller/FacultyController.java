@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping(value = "/api/v1/faculty", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = FacultyController.BASE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class FacultyController {
+
+    public static final String BASE_URL = "/api/v1/faculty";
+
 
     private FacultyService facultyService;
 
@@ -52,6 +55,7 @@ public class FacultyController {
                                        @RequestParam String sortBy, @RequestParam(defaultValue = "false")Boolean sortDesc){
         return facultyService.searchFaculty(searchQuery,page,itemsPerPage,sortBy,sortDesc);
     }
+
 
 
 

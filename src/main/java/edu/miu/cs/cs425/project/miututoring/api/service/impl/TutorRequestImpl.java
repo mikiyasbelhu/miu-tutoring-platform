@@ -1,26 +1,44 @@
 package edu.miu.cs.cs425.project.miututoring.api.service.impl;
 
+import edu.miu.cs.cs425.project.miututoring.api.model.Enrollment;
 import edu.miu.cs.cs425.project.miututoring.api.model.TutorRequest;
+import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
+import edu.miu.cs.cs425.project.miututoring.api.repository.EnrollmentRepository;
 import edu.miu.cs.cs425.project.miututoring.api.repository.TutorRequestRepository;
+import edu.miu.cs.cs425.project.miututoring.api.repository.TutorialGroupRepository;
 import edu.miu.cs.cs425.project.miututoring.api.service.TutorRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TutorRequestImpl implements TutorRequestService {
-    @Autowired
-    TutorRequestRepository tutorRequestRepository;
 
-    public TutorRequestImpl(TutorRequestRepository tutorRequestRepository) {
+    TutorRequestRepository tutorRequestRepository;
+    EnrollmentRepository enrollmentRepository;
+    TutorialGroupRepository tutorialGroupRepository;
+
+    @Autowired
+    public TutorRequestImpl(TutorRequestRepository tutorRequestRepository, EnrollmentRepository enrollmentRepository, TutorialGroupRepository tutorialGroupRepository) {
         this.tutorRequestRepository = tutorRequestRepository;
+        this.enrollmentRepository = enrollmentRepository;
+        this.tutorialGroupRepository = tutorialGroupRepository;
     }
 
     @Override
     public List<TutorRequest> listTutorRequests() {
-        return (List<TutorRequest>) tutorRequestRepository.findAll();
+        return tutorRequestRepository.findAll();
     }
+
+    @Override
+    public Page<TutorRequest> listTutorRequestsPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
+        return tutorRequestRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE :pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
+    }
+
 
     @Override
     public TutorRequest getTutorRequestById(Integer tutorRequestId) {
@@ -48,10 +66,16 @@ public class TutorRequestImpl implements TutorRequestService {
     }
 
     @Override
-    public TutorRequest acceptTutorRequest(Integer tutorRequestId) {
+    public TutorRequest acceptTutorRequest(Integer tutorRequestId, TutorialGroup tutorialGroup) {
         return tutorRequestRepository.findById(tutorRequestId).map(tutorRequest -> {
             tutorRequest.setStatus(TutorRequest.Status.ACCEPTED);
-            return tutorRequestRepository.save(tutorRequest);
+            TutorRequest updatedRequest =  tutorRequestRepository.save(tutorRequest);
+            Enrollment enrollment = enrollmentRepository.findById(updatedRequest.getEnrollment().getEnrollmentId()).get();
+            enrollment.setRole(Enrollment.RoleType.TUTOR);
+            tutorialGroup.setTutor(enrollment.getStudent());
+            tutorialGroupRepository.save(tutorialGroup);
+            enrollmentRepository.save(enrollment);
+            return updatedRequest;
         }).orElse(null);
     }
 
@@ -61,5 +85,10 @@ public class TutorRequestImpl implements TutorRequestService {
             tutorRequest.setStatus(TutorRequest.Status.REJECTED);
             return tutorRequestRepository.save(tutorRequest);
         }).orElse(null);
+    }
+
+    @Override
+    public Page<TutorRequest> getTutorRequestByStudent(Long studentId, Integer page, Integer itemsPerPage, String sortBy, Boolean sortDesc) {
+        return tutorRequestRepository.findAllByEnrollment_Student_IdEquals(studentId, PageRequest.of(page, itemsPerPage == -1 ? Integer.MAX_VALUE :itemsPerPage, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 }

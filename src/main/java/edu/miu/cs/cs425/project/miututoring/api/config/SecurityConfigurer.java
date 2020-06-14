@@ -46,7 +46,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/api/v1/authenticate").permitAll()
                 .antMatchers("/tutorial/**").permitAll()
                 .antMatchers( "/api/v1/student/**").hasRole("ADMIN")
-                .antMatchers("/api/v1/faculty/**").hasRole("FACULTY")
+                .antMatchers("/api/v1/faculty/**").hasRole("ADMIN")
                 .anyRequest().authenticated().and().
                 exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
