@@ -12,4 +12,5 @@ public interface TutorRequestService {
     TutorRequest updateTutorRequest(TutorRequest tutorRequest, Integer tutorRequestId);
     TutorRequest acceptTutorRequest(Integer tutorRequestId);
     TutorRequest denyTutorRequest(Integer tutorRequestId);
+
 }
