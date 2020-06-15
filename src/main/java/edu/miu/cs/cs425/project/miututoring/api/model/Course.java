@@ -69,4 +69,23 @@ public class Course {
                 this.courseName,
                 this.courseCredit);
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result;
+        if((obj == null) || (getClass() != obj.getClass())){
+            result = false;
+        } // end if
+        else{
+            Course other = (Course) obj;
+            result = this.getCourseName().equals(other.getCourseName()) &&  this.getCourseNumber().equals(other.getCourseNumber()) && this.getCourseCredit().equals(other.getCourseCredit());
+        } // end else
+
+        return result;
+    }
 }
