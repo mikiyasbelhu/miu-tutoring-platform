@@ -18,7 +18,7 @@ public class TutorialGroupServiceImpl implements TutorialGroupService {
     TutorialGroupRepository tutorialGroupRepository;
 
     @Autowired
-    TutorialGroupServiceImpl(TutorialGroupRepository tutorialGroupRepository){
+    public TutorialGroupServiceImpl(TutorialGroupRepository tutorialGroupRepository){
         this.tutorialGroupRepository = tutorialGroupRepository;
     }
 

@@ -16,7 +16,6 @@ import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class CourseServiceImplTest extends AbstractMiuTutoringComponentTest {
 

@@ -34,7 +34,7 @@ public class StudentController {
     }
 
     @PostMapping(value = "/register")
-    public Student registerStudent(@Valid @RequestBody Student student){
+    public Student registerStudent(@Valid @RequestBody Student student) throws Exception {
         student.setRoles(new ArrayList<>(Arrays.asList("ROLE_STUDENT")));
         return studentService.registerStudent(student);
     }
