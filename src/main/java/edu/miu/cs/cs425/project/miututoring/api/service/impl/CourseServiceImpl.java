@@ -36,7 +36,6 @@ public class CourseServiceImpl implements CourseService {
     public Course updateCourse(Course updatedCourse, Integer courseId) {
         return courseRepository.findById(courseId).map(course -> {
             course.setCourseCredit(updatedCourse.getCourseCredit());
-            course.setCourseId(updatedCourse.getCourseId());
             course.setCourseName(updatedCourse.getCourseName());
             course.setCourseNumber(updatedCourse.getCourseNumber());
             return courseRepository.save(course);
@@ -60,8 +59,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<Course> searchCourses(String courseName, String courseNumber, Integer courseCredit, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
-        return  courseRepository.findAllByCourseNameContainingOrCourseNumberContainingOrCourseCreditContaining(courseName,courseNumber,courseCredit,PageRequest.of(pageNo, pageSize, Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
+    public Page<Course> searchCourses(String searchQuery, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
+        return  courseRepository.findAllByCourseNameContainingOrCourseNumberContainingOrderByCourseName(searchQuery,searchQuery,PageRequest.of(pageNo, pageSize,sortBy.equals("") ? Sort.unsorted() :  Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 
 }
