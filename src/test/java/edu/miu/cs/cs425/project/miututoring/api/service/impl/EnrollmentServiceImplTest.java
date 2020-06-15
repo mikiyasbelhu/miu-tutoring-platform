@@ -58,7 +58,7 @@ class EnrollmentServiceImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void saveEnrollment() {
+    void saveEnrollment() throws Exception {
 
         Student student10 = new Student("student3@miu.edu","student-me","000-61-1111", "Girma", "Sisay", "B.", 3.6, LocalDate.of(2020,1,10));
         Course course2 = new Course("CS525", "EA", 6);
@@ -88,7 +88,7 @@ class EnrollmentServiceImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void updateEnrollment() {
+    void updateEnrollment() throws Exception {
         Integer enrollmentId=new Integer(1);
         Enrollment newEnrollment=enrollmentService.getEnrollmentById(enrollmentId);
 

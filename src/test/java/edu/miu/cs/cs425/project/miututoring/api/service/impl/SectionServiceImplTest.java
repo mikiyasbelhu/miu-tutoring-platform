@@ -46,7 +46,7 @@ class SectionServiceImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void saveSection() {
+    void saveSection() throws Exception {
         Course course2 = new Course("CS525", "EA", 6);
         Faculty faculty2 = new Faculty("abcd@miu.edu","faculty", "Obk", "A",
                 "Luka","Engineering ");
@@ -85,7 +85,7 @@ class SectionServiceImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void updateSection() {
+    void updateSection() throws Exception {
         Course course2 = new Course("CS525", "EA", 6);
         Faculty faculty2 = new Faculty("abcd@miu.edu","faculty", "Obk", "A",
                 "Luka","Engineering ");
