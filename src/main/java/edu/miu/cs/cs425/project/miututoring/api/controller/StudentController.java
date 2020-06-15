@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping(value = "/api/v1/student", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = StudentController.BASE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class StudentController {
+
+    public static final String BASE_URL = "/api/v1/student";
 
     StudentService studentService;
 
