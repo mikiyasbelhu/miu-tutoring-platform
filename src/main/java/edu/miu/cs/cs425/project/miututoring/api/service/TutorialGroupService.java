@@ -13,4 +13,6 @@ public interface TutorialGroupService {
     TutorialGroup registerTutorialGroup(TutorialGroup tutorialGroup);
     TutorialGroup updateTutorialGroup(TutorialGroup updatedTutorialGroup, Long tutorialGroupId);
     void deleteTutorialGroupById(Long tutorialGroupId);
+
+    List<TutorialGroup> getTutorialGroupBySection(Integer sectionId);
 }

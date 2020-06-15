@@ -30,7 +30,7 @@ public class TutorRequest {
     public TutorRequest() {
     }
 
-    public TutorRequest(Section section, Enrollment enrollment,  String experience) {
+    public TutorRequest(Section section, Enrollment enrollment, String experience) {
         this.section = section;
         this.enrollment = enrollment;
         this.status = Status.PENDING;

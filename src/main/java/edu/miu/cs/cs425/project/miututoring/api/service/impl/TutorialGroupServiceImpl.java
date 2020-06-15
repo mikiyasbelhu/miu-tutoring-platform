@@ -57,4 +57,9 @@ public class TutorialGroupServiceImpl implements TutorialGroupService {
         tutorialGroupRepository.deleteById(tutorialGroupId);
     }
 
+    @Override
+    public List<TutorialGroup> getTutorialGroupBySection(Integer sectionId) {
+        return tutorialGroupRepository.findAllBySection_SectionIdEquals(sectionId);
+    }
+
 }

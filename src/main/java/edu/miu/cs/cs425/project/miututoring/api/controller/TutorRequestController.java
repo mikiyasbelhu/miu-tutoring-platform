@@ -1,8 +1,11 @@
 package edu.miu.cs.cs425.project.miututoring.api.controller;
 
+import edu.miu.cs.cs425.project.miututoring.api.model.Enrollment;
 import edu.miu.cs.cs425.project.miututoring.api.model.TutorRequest;
+import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
 import edu.miu.cs.cs425.project.miututoring.api.service.TutorRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.invocation.ReactiveReturnValueHandler;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +26,9 @@ public class TutorRequestController {
     }
 
     @GetMapping(value = "/list")
-    public List<TutorRequest> getListOfTutorRequests(){
-        return tutorRequestService.listTutorRequests();
+    public Page<TutorRequest> getListOfTutorRequests(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
+                                                     @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc){
+        return tutorRequestService.listTutorRequestsPaged(page,itemsPerPage,sortBy,sortDesc);
     }
 
     @GetMapping(value = "/get/{tutorRequestId}")
@@ -37,7 +41,7 @@ public class TutorRequestController {
         tutorRequestService.deleteTutorRequestById(tutorRequestId);
     }
 
-    @PostMapping(value = "/savetutorequest")
+    @PostMapping(value = "/save")
     public TutorRequest saveTutorRequest(@Valid @RequestBody TutorRequest tutorRequest){
         return tutorRequestService.saveTutorRequest(tutorRequest);
     }
@@ -45,13 +49,20 @@ public class TutorRequestController {
     public TutorRequest editTutorRequest(@Valid @RequestBody TutorRequest tutorRequest, @PathVariable Integer tutorRequestId){
         return tutorRequestService.updateTutorRequest(tutorRequest,tutorRequestId);
     }
-    @PutMapping(value = "/acceptrequest/{tutorRequestId}")
-    public TutorRequest acceptTutorRequest(@PathVariable Integer tutorRequestId){
-        return tutorRequestService.acceptTutorRequest(tutorRequestId);
+    @PostMapping(value = "/accept/{tutorRequestId}")
+    public TutorRequest acceptTutorRequest(@Valid @RequestBody TutorialGroup tutorialGroup, @PathVariable Integer tutorRequestId){
+        return tutorRequestService.acceptTutorRequest(tutorRequestId, tutorialGroup);
     }
 
-    @PutMapping(value = "/denyrequest/{tutorRuquestId}")
+    @GetMapping(value = "/deny/{tutorRequestId}")
     public TutorRequest denyTutorRequest(@PathVariable Integer tutorRequestId){
         return tutorRequestService.denyTutorRequest(tutorRequestId);
     }
+
+    @GetMapping(value="/getbystudent/{studentId}")
+    public Page<TutorRequest> getTutorRequestByStudent(@PathVariable Long studentId, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
+                                                       @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
+        return tutorRequestService.getTutorRequestByStudent(studentId,page,itemsPerPage,sortBy,sortDesc);
+    }
+
 }
