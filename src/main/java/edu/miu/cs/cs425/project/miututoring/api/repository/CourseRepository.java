@@ -11,5 +11,5 @@ import javax.validation.constraints.NotNull;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer> {
-    Page<Course> findAllByCourseNameContainingOrCourseNumberContainingOrCourseCreditContaining(@NotNull(message = "*Course Name is required") String courseName, @NotNull(message = "*Course Number is required") String courseNumber, @NotNull(message = "*Course Credit is requried") Integer courseCredit, Pageable pageable);
+    Page<Course> findAllByCourseNameContainingOrCourseNumberContainingOrderByCourseName(@NotNull(message = "*Course Name is required") String courseName, @NotNull(message = "*Course Number is required") String courseNumber, Pageable pageable);
 }

@@ -51,12 +51,12 @@ class CourseServiceImplTest extends AbstractMiuTutoringComponentTest {
     public void testGetAllCourses(){
         List<Course> course = courseService.getAllCourses();
         Assert.assertNotNull("Failure: expected course to be not null", course);
-        Assert.assertEquals("Failure: expected size", 1, course.size());
+        Assert.assertEquals("Failure: expected size", 2, course.size());
         logger.info("Course list data: " + Arrays.toString(course.toArray()));
     }
     @Test
     public void testSaveCourse(){
-        Course course = new Course("1","SE",5);
+        Course course = new Course("CS390","Fundamentals of Programming Practice",4);
         Course savedCourse = courseService.saveCourse(course);
         Assert.assertNotNull("Failure: expected not null", savedCourse);
         Assert.assertNotNull("Failure expected courseId to be not null", savedCourse.getCourseId());
@@ -64,7 +64,28 @@ class CourseServiceImplTest extends AbstractMiuTutoringComponentTest {
         Assert.assertNotNull("Failure expected courseName to be not null,", savedCourse.getCourseName());
         Assert.assertNotNull("Failure expected courseCredit to be not null", savedCourse.getCourseCredit());
         List<Course> courses = courseService.getAllCourses();
-        Assert.assertEquals("Failure: expected size", 2, courses.size());
+        Assert.assertEquals("Failure: expected size", 3, courses.size());
         logger.info("Courses list data: "+ Arrays.toString((courses.toArray())));
     }
+
+    @Test
+    public void testGetCourseById(){
+        Integer courseId = 1;
+        Course course = courseService.getCourseById(courseId);
+        Assert.assertNotNull("Failure: expected course not to be null", course);
+        Assert.assertEquals("Failure: expected courseId to be the same",courseId, course.getCourseId());
+        logger.info("Course Data: " + course);
+    }
+    @Test
+    public void testUpdateCourseById(){
+        Course update = new Course("CS390","Fundamentals of Programming Practice",4);
+        Course updated = courseService.updateCourse(update,1);
+        Assert.assertNotNull("Failure: expected course not to be null", updated);
+        Assert.assertNotNull("Failure: expected courseId  to be the same",updated.getCourseId());
+        Assert.assertEquals("Failure: expected course number to be the same", update.getCourseNumber(), updated.getCourseNumber());
+        Assert.assertEquals("Failure: expected course name to be the same", update.getCourseName(), updated.getCourseName());
+        Assert.assertEquals("Failure: expected course credit to be the same", update.getCourseCredit(), updated.getCourseCredit());
+        logger.info("Course Data: " + updated);
+    }
+
 }
