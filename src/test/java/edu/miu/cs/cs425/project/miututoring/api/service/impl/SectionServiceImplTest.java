@@ -1,12 +1,8 @@
 package edu.miu.cs.cs425.project.miututoring.api.service.impl;
 
 import edu.miu.cs.cs425.project.miututoring.api.AbstractMiuTutoringComponentTest;
-import edu.miu.cs.cs425.project.miututoring.api.model.Course;
-import edu.miu.cs.cs425.project.miututoring.api.model.Faculty;
-import edu.miu.cs.cs425.project.miututoring.api.model.Section;
-import edu.miu.cs.cs425.project.miututoring.api.service.CourseService;
-import edu.miu.cs.cs425.project.miututoring.api.service.FacultyService;
-import edu.miu.cs.cs425.project.miututoring.api.service.SectionService;
+import edu.miu.cs.cs425.project.miututoring.api.model.*;
+import edu.miu.cs.cs425.project.miututoring.api.service.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +25,15 @@ class SectionServiceImplTest extends AbstractMiuTutoringComponentTest {
     @Autowired
     private FacultyService facultyService;
 
+    @Autowired
+    private EnrollmentService enrollmentService;
+    @Autowired
+    private TutorialGroupService tutorialGroupService;
+
+    @Autowired
+    private TutorRequestService tutorRequestService;
+    private TutorRequest found;
+    private Enrollment enrollmentFound;
     @BeforeEach
     void setUp() {logger.info("SectionServiceImplTest started");
     }
@@ -41,7 +46,7 @@ class SectionServiceImplTest extends AbstractMiuTutoringComponentTest {
     void getAllSections() {
         List<Section> section=sectionService.getAllSections();
         Assert.assertNotNull("Failure: expected sections to be not null", section);
-        Assert.assertEquals("Failure: expected size",1, section.size());
+        Assert.assertEquals("Failure: expected size",2, section.size());
         logger.info("Sections list data: " + Arrays.toString(section.toArray()));
     }
 
@@ -64,7 +69,7 @@ class SectionServiceImplTest extends AbstractMiuTutoringComponentTest {
         Assert.assertEquals("Failure: expected section month match", sectionAB.getMonth(), savedSection.getMonth());
         Assert.assertEquals("Failure: expected section department match", sectionAB.getFaculty().getDepartment(), savedSection.getFaculty().getDepartment());
         List<Section> sections = sectionService.getAllSections();
-        Assert.assertEquals("Failure: expected size", 2, sections.size());
+        Assert.assertEquals("Failure: expected size", 3, sections.size());
         logger.info("Sections list data: " + Arrays.toString(sections.toArray()));
     }
 
@@ -110,12 +115,35 @@ class SectionServiceImplTest extends AbstractMiuTutoringComponentTest {
 
        Integer sectionId = new Integer(1);
        Section section = sectionService.getSectionById(sectionId);
+        List<TutorRequest> tutorRequests = tutorRequestService.listTutorRequests();
+        for (TutorRequest tutorRequest:tutorRequests) {
+            if (tutorRequest.getSection() == section) {
+                 found = tutorRequest;
+            }
+        }
+        found.setSection(null);
+        tutorRequestService.updateTutorRequest(found, found.getRequestId());
+        List<Enrollment> enrollments = enrollmentService.getAllEnrollment();
+        for (Enrollment enrollment:enrollments) {
+            if (enrollment.getSection() == section) {
+                enrollmentFound = enrollment;
+            }
+        }
+        enrollmentFound.setSection(null);
+
+        List<TutorialGroup> tutorialGroups = tutorialGroupService.getAllTutorialGroups();
+        for (TutorialGroup tutorialGroup: tutorialGroups){
+            if (tutorialGroup.getSection() == section){
+                tutorialGroup.setSection(null);
+            }
+        }
+        enrollmentService.updateEnrollment(enrollmentFound,enrollmentFound.getEnrollmentId());
         Assert.assertNotNull("Failure: expected section to be not null", section);
         sectionService.deleteSectionById(sectionId);
         List<Section> sections = sectionService.getAllSections();
         Assert.assertEquals("Failure: expected size", 1, sections.size());
         Section deletedSection = sectionService.getSectionById(sectionId);
-        Assert.assertNotNull("Failure: expected deleted Section to be null since is supposed to have been deleted", deletedSection);
+        Assert.assertNull("Failure: expected deleted Section to be null since is supposed to have been deleted", deletedSection);
         logger.info("Deleted section data"+deletedSection);
     }
 

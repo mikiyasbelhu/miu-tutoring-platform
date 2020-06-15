@@ -30,6 +30,8 @@ class EnrollmentServiceImplTest extends AbstractMiuTutoringComponentTest {
     private FacultyService facultyService;
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private TutorRequestService tutorRequestService;
 
 
     @BeforeEach
@@ -44,7 +46,7 @@ class EnrollmentServiceImplTest extends AbstractMiuTutoringComponentTest {
     void getAllEnrollment() {
         List<Enrollment> enrollment=enrollmentService.getAllEnrollment();
         Assert.assertNotNull("Failure:expected not null",enrollment);
-        Assert.assertEquals("Failure:expected size",1,enrollment.size());
+        Assert.assertEquals("Failure:expected size",2,enrollment.size());
         logger.info("Enrollment list data"+ Arrays.toString(enrollment.toArray()));
     }
 
@@ -79,7 +81,7 @@ class EnrollmentServiceImplTest extends AbstractMiuTutoringComponentTest {
         Assert.assertNotNull("Failure: expected sectionId to be not null", savedEnrollment.getEnrollmentId());
 
         List<Enrollment>enrollments=enrollmentService.getAllEnrollment();
-        Assert.assertEquals("Failure:expected to be equal",2,enrollments.size());
+        Assert.assertEquals("Failure:expected to be equal",3,enrollments.size());
 
         Assert.assertEquals("Failure: expected enrollment section name match",savedSection.getSectionName(),savedEnrollment.getSection().getSectionName());
         Assert.assertEquals("Failure: expected enrollment student number match", savedStudent.getStudentNumber(),savedEnrollment.getStudent().getStudentNumber());
@@ -119,12 +121,23 @@ class EnrollmentServiceImplTest extends AbstractMiuTutoringComponentTest {
     void deleteEnrollmentById() {
         Integer enrollmentId = new Integer(1);
         Enrollment enrollment = enrollmentService.getEnrollmentById(enrollmentId);
+        TutorRequest tutorRequest = enrollment.getTutorRequest();
+        tutorRequest.setEnrollment(null);
+        tutorRequestService.updateTutorRequest(tutorRequest,1);
         Assert.assertNotNull("Failure: expected section to be not null", enrollment);
         enrollmentService.deleteEnrollmentById(enrollmentId);
         List<Enrollment> enrollments = enrollmentService.getAllEnrollment();
-        Assert.assertEquals("Failure: expected size", 0, enrollments.size());
+        Assert.assertEquals("Failure: expected size", 1, enrollments.size());
         Enrollment deletedEnrollment = enrollmentService.getEnrollmentById(enrollmentId);
         Assert.assertNull("Failure: expected deleted Section to be null since is supposed to have been deleted", deletedEnrollment);
+    }
+
+    @Test
+    public void testGetEnrollmentByIdForInvalidId() {
+        Integer enrollmentId = Integer.MAX_VALUE;
+        Enrollment enrollment = enrollmentService.getEnrollmentById(enrollmentId);
+        Assert.assertNull("Failure: expected null", enrollment);
+        logger.info("Section data: " + enrollment);
     }
 
 
