@@ -10,9 +10,9 @@ public interface FacultyService {
     List<Faculty> getAllFaculty();
     Page<Faculty> getAllFacultyPaged(int pageNo, Integer pageSize,String sortBy, Boolean sortDesc);
     Faculty getFacultyById(Long id);
-    Faculty registerFaculty(Faculty faculty);
+    Faculty registerFaculty(Faculty faculty) throws Exception;
     Faculty updateFaculty(Faculty updateFaculty, Long facultyId);
     void deleteFacultyById(Long facultyId);
     Page<Faculty> searchFaculty(String searchQuery, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
-
+    Faculty getByUsername(String username);
 }

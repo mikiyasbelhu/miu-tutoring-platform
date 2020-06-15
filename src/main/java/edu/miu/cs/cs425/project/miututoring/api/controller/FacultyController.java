@@ -32,7 +32,7 @@ public class FacultyController {
         return facultyService.getFacultyById(facultyId);
     }
     @PostMapping(value = "/register")
-    public Faculty registerFaculty(@Valid @RequestBody Faculty faculty){
+    public Faculty registerFaculty(@Valid @RequestBody Faculty faculty) throws Exception {
         faculty.setRoles(new ArrayList<>(Arrays.asList("ROLE_FACULTY")));
         return facultyService.registerFaculty(faculty);
     }

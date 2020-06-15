@@ -5,6 +5,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailGenerator {
 
+    public static String requestAccepted(String name, String course ,String group ) {
+        final String content = "<div class=\"jumbotron\">\n" +
+                "<div class=\"container\">\n" +
+                "<h3 class=\"display-3\">Dear, "+name+"!</h3>\n" +
+                "<p class=\"lead\">Your tutor request application for <strong>" + course + "</strong> has been accepted</p>\n" +
+                "<p>You have been assigned as a tutor for <strong>" + group + "</strong>.</p>\n" +
+                "<div>Cheers,</div>\n" +
+                "<div>MIU Tutoring</div>\n" +
+                "</div>\n" +
+                "</div>";
+        return content;
+
+    }
+
     public static String generateWelcomeMessage(String name, String username ,String plainPasssword ) {
         final String content =
                 "<div class=\"jumbotron\">\n" +

@@ -7,9 +7,11 @@ import edu.miu.cs.cs425.project.miututoring.api.service.NotificationService;
 import edu.miu.cs.cs425.project.miututoring.api.util.EmailGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,7 @@ public class FacultyServiceImpl implements FacultyService {
     NotificationService notificationService;
 
     @Autowired
-    FacultyServiceImpl(FacultyRepository facultyRepository, PasswordEncoder passwordEncoder, NotificationService notificationService ){
+    public FacultyServiceImpl(FacultyRepository facultyRepository, @Lazy PasswordEncoder passwordEncoder, NotificationService notificationService ){
         this.facultyRepository = facultyRepository;
         this.passwordEncoder = passwordEncoder;
         this.notificationService = notificationService;
@@ -49,7 +51,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public Faculty registerFaculty(Faculty faculty) {
+    public Faculty registerFaculty(Faculty faculty) throws Exception {
          if(!facultyRepository.findByUsername(faculty.getUsername()).isPresent()){
              String plainPasssword = faculty.getPassword();
              faculty.setPassword(this.passwordEncoder.encode(plainPasssword));
@@ -57,16 +59,16 @@ public class FacultyServiceImpl implements FacultyService {
              Faculty savedFaculty = facultyRepository.save(faculty);
              String message =  EmailGenerator.generateWelcomeMessage(savedFaculty.getFirstName(),savedFaculty.getUsername(),plainPasssword);
              String body = EmailGenerator.generateEmail(message);
-//             try {
-//                 notificationService.sendNotification(username,faculty.getUsername(),
-//                         body, "MIU Tutoring registration");
-//             } catch (MessagingException e) {
-//                 System.out.println("Unable to send email");
-//             }
+             try {
+                 notificationService.sendNotification(username,faculty.getUsername(),
+                         body, "MIU Tutoring registration");
+             } catch (MessagingException e) {
+                 System.out.println("Unable to send email");
+             }
              return savedFaculty;
         }
          else{
-             throw new Error("Username " + username + " is already taken");
+             throw new Exception("Username " + username + " is already taken");
          }
     }
 
@@ -92,5 +94,10 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Page<Faculty> searchFaculty(String searchQuery, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
         return facultyRepository.findAllByDepartmentContainingOrFirstNameContainingOrMiddleNameContainingOrLastNameContainingOrderByFirstName(searchQuery, searchQuery, searchQuery, searchQuery,PageRequest.of(pageNo,pageSize,Sort.by(sortDesc?Sort.Direction.DESC : Sort.Direction.ASC, sortBy)));
+    }
+
+    @Override
+    public Faculty getByUsername(String username) {
+        return facultyRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found"));
     }
 }

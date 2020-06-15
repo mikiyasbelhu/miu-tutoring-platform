@@ -6,25 +6,35 @@ import edu.miu.cs.cs425.project.miututoring.api.model.TutorialGroup;
 import edu.miu.cs.cs425.project.miututoring.api.repository.EnrollmentRepository;
 import edu.miu.cs.cs425.project.miututoring.api.repository.TutorRequestRepository;
 import edu.miu.cs.cs425.project.miututoring.api.repository.TutorialGroupRepository;
+import edu.miu.cs.cs425.project.miututoring.api.service.NotificationService;
 import edu.miu.cs.cs425.project.miututoring.api.service.TutorRequestService;
+import edu.miu.cs.cs425.project.miututoring.api.util.EmailGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+
 @Service
 public class TutorRequestImpl implements TutorRequestService {
+
+    @Value("${spring.mail.username}")
+    private String username;
 
     TutorRequestRepository tutorRequestRepository;
     EnrollmentRepository enrollmentRepository;
     TutorialGroupRepository tutorialGroupRepository;
+    NotificationService notificationService;
 
     @Autowired
-    public TutorRequestImpl(TutorRequestRepository tutorRequestRepository, EnrollmentRepository enrollmentRepository, TutorialGroupRepository tutorialGroupRepository) {
+    public TutorRequestImpl(TutorRequestRepository tutorRequestRepository, EnrollmentRepository enrollmentRepository, TutorialGroupRepository tutorialGroupRepository, NotificationService notificationService) {
         this.tutorRequestRepository = tutorRequestRepository;
         this.enrollmentRepository = enrollmentRepository;
         this.tutorialGroupRepository = tutorialGroupRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -67,6 +77,15 @@ public class TutorRequestImpl implements TutorRequestService {
             tutorialGroup.setTutor(enrollment.getStudent());
             tutorialGroupRepository.save(tutorialGroup);
             enrollmentRepository.save(enrollment);
+            try {
+                String message = EmailGenerator.requestAccepted(tutorRequest.getEnrollment().getStudent().getFirstName(),
+                        tutorRequest.getSection().getCourse().getCourseName(),tutorialGroup.getTutorialGroupNumber());
+                String body = EmailGenerator.generateEmail(message);
+                notificationService.sendNotification(username,tutorRequest.getEnrollment().getStudent().getUsername(),
+                        body, "Tutor request accepted");
+            } catch (MessagingException e) {
+                System.out.println("Unable to send email");
+            }
             return updatedRequest;
         }).orElse(null);
     }

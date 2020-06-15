@@ -9,8 +9,9 @@ public interface StudentService {
     List<Student> getAllStudents();
     Page<Student> getAllStudentsPaged(int pageNo,Integer pageSize, String sortBy, Boolean sortDesc);
     Student getStudentById(Long id);
-    Student registerStudent(Student student);
+    Student registerStudent(Student student) throws Exception;
     Student updateStudent(Student updatedStudent, Long studentId);
     void deleteStudentById(Long studentId);
     Page<Student> searchStudents(String searchQuery, int pageNo,Integer pageSize,String sortBy, Boolean sortDesc);
+    Student getByUsername(String username);
 }
