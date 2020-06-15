@@ -15,8 +15,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/tutorialrequest", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = TutorRequestController.BASE_URL , produces = MediaType.APPLICATION_JSON_VALUE)
 public class TutorRequestController {
+
+    public static final String BASE_URL = "/api/v1/tutorialrequest";
 
     @Autowired
     TutorRequestService tutorRequestService;
