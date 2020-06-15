@@ -96,7 +96,7 @@ class ReportServiceImplTest extends AbstractMiuTutoringComponentTest {
         Assert.assertNotNull("Failure: expected reportId not to be null", actual.getReportId());
         Assert.assertNotNull("Failure: expected report to return a student", actual.getStudent());
         List<Report> reports = reportService.getAllReports();
-        Assert.assertEquals("Failure: expected 3 reports", 1, reports.size());
+        Assert.assertEquals("Failure: expected 3 reports", 3, reports.size());
         logger.info("Report list Data: " + Arrays.toString(reports.toArray()));
     }
 
@@ -135,10 +135,10 @@ class ReportServiceImplTest extends AbstractMiuTutoringComponentTest {
 
     @Test
     void findReportByStudentId(){
-        Long studentId = 2L;
-        Report actual = reportService.getReportByStudentId(studentId);
+        Long studentId = 4L;
+        List<Report> actual = reportService.getReportByStudentId(studentId);
         Assert.assertNotNull("Failure: expected report not to be null", actual);
-        Assert.assertEquals("Failure: expected student Id to be 2", studentId, actual.getStudent().getId());
+        Assert.assertEquals("Failure: expected student Id to be 4", studentId, actual.get(0).getStudent().getId());
     }
 
 

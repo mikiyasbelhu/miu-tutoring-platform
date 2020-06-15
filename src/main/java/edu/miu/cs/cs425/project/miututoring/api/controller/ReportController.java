@@ -14,8 +14,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/report", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = ReportController.BASE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ReportController {
+    public static final String BASE_URL = "/api/v1/report";
 
     @Autowired
     ReportService reportService;
@@ -57,13 +58,13 @@ public class ReportController {
     }
 
     @GetMapping(value = "/search")
-    public Page<Report> searchReport(@RequestParam String searchQuery, @RequestParam Student student, @RequestParam Course course, @RequestParam TutorialGroup tutorialGroup, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
+    public Page<Report> searchReport(@RequestParam String searchQuery, @RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
                                      @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc) {
-        return reportService.searchReports(searchQuery, student, course, tutorialGroup, page, itemsPerPage, sortBy, sortDesc);
+        return reportService.searchReports(searchQuery, page, itemsPerPage, sortBy, sortDesc);
     }
 
     @GetMapping(value = "/get/{studentId}")
-    public Report getReportByStudentId(@PathVariable Long studentId) {
+    public List<Report> getReportByStudentId(@PathVariable Long studentId) {
         return reportService.getReportByStudentId(studentId);
     }
 
