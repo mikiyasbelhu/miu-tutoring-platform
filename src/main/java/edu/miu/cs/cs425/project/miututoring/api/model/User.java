@@ -135,4 +135,21 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result;
+        if((obj == null) || (getClass() != obj.getClass())){
+            result = false;
+        } // end if
+        else{
+            Faculty other = (Faculty) obj;
+            result = this.getUsername().equals(other.getUsername()) &&
+                    this.getMiddleName().equals(other.getMiddleName()) &&
+                    this.getLastName().equals(other.getLastName())&&
+                    this.getRoles().equals(other.getRoles());
+        } // end else
+        return result;
+    }
+
 }
