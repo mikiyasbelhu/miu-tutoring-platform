@@ -80,7 +80,7 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void saveTutorRequest() {
+    void saveTutorRequest() throws Exception{
         Student student3 = new Student("aaaa@hi2.in", "mine", "000-61-0004", "Tigist", "Gutema", "Kefyalew", 3.84, LocalDate.of(2019, 5, 21));
         studentService.registerStudent(student3);
         Faculty faculty2 = new Faculty("bbbbb@miu.edu", "yours", "Michael", "", "Zijlstra", "Computer Science CS420");
@@ -103,7 +103,7 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void updateTutorRequest() {
+    void updateTutorRequest() throws Exception{
         Student student3 = new Student("aaaa@hi2.in", "mine", "000-61-0004", "Tigist", "Gutema", "Kefyalew", 3.84, LocalDate.of(2019, 5, 21));
         studentService.registerStudent(student3);
         Faculty faculty2 = new Faculty("bbbbb@miu.edu", "yours", "Michael", "", "Zijlstra", "Computer Science CS420");
@@ -127,7 +127,7 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void acceptTutorRequest() {
+    void acceptTutorRequest() throws Exception{
         Faculty faculty2 = new Faculty("bbbbb@miu.edu", "yours", "Michael", "", "Zijlstra", "Computer Science CS420");
         facultyService.registerFaculty(faculty2);
         Course course1 = new Course("CS420", "MPP", 4);
