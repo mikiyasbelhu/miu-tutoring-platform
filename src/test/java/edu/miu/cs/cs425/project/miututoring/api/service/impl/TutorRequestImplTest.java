@@ -73,6 +73,9 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
     @Test
     void deleteTutorRequestById() {
         TutorRequest actual = tutorRequestService.getTutorRequestById(2);
+        Enrollment enrollment = actual.getEnrollment();
+        enrollment.setTutorRequest(null);
+        enrollmentService.updateEnrollment(enrollment,enrollment.getEnrollmentId());
         Assert.assertNotNull("Failure: expected tutorial request to not be null", actual);
         tutorRequestService.deleteTutorRequestById(2);
         List<TutorRequest> tutorRequests = tutorRequestService.listTutorRequests();

@@ -132,6 +132,12 @@ public class DataInitializer implements CommandLineRunner {
             saveTutorialRequest(request1);
             TutorRequest request2 = new TutorRequest(section2,enrollment2, "I have 2 years experience in the tech industry");
             saveTutorialRequest(request2);
+
+            enrollment1.setTutorRequest(request1);
+            enrollment2.setTutorRequest(request2);
+
+            saveEnrollment(enrollment1);
+            saveEnrollment(enrollment2);
     
             //Report
             Report report1 = new Report(student1, tutorialGroup1, course1, "This student is progressing really well");

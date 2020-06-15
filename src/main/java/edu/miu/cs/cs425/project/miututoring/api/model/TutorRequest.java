@@ -17,7 +17,6 @@ public class TutorRequest {
 
     @OneToOne
     @JoinColumn(name = "enrollment")
-    @NotNull(message = "Enrollment Id can not be null")
     private Enrollment enrollment;
 
     private Status status;

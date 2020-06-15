@@ -50,7 +50,7 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     public void deleteSectionById(Integer sectionId) {
-        sectionRepository.findById(sectionId);
+        sectionRepository.deleteById(sectionId);
 
     }
 
