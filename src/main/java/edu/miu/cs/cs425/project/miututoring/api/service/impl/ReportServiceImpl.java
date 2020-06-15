@@ -47,8 +47,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Report getReportByStudentId(Long studentId) {
-        return reportRepository.findByStudent_Id(studentId);
+    public List<Report> getReportByStudentId(Long studentId) {
+        return reportRepository.findAllByStudent_Id(studentId);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Page<Report> searchReports(String searchQuery, Student student, Course course, TutorialGroup tutorialGroup, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
-        return  reportRepository.findAllByReportContainingOrStudentContainingOrCourseContainingOrTutorialGroupContaining(searchQuery, student, course, tutorialGroup, PageRequest.of(pageNo, pageSize, Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
+    public Page<Report> searchReports(String searchQuery, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
+        return  reportRepository.findAllByReportTextContainingOrStudent_FirstNameContainingOrCourse_CourseNameContainingOrTutorialGroup_TutorialGroupNumberContainingOrderByReportText(searchQuery, searchQuery, searchQuery, searchQuery, PageRequest.of(pageNo, pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
 }

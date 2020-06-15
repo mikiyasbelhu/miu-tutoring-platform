@@ -45,7 +45,7 @@ public class FacultyServiceImplTest extends  AbstractMiuTutoringComponentTest{
         Assert.assertNotNull("Failure: expected faculty userName to be not null",faculty.getUsername());
         Assert.assertEquals("Failure: expected factulty department to match", "Machine Learning CS-588", faculty.getDepartment());
         List<Faculty> faculties = facultyService.getAllFaculty();
-        Assert.assertEquals("Failure: expected size",2,faculties.size());
+        Assert.assertEquals("Failure: expected size",3,faculties.size());
         logger.info("Faculities list data: "+ Arrays.toString(faculties.toArray()));
     }
 
@@ -67,7 +67,7 @@ public class FacultyServiceImplTest extends  AbstractMiuTutoringComponentTest{
         facultyService.registerFaculty(faculty);
         Assert.assertNotNull("Failure: expected faculty to be not null", faculty);
         List<Faculty> faculties = facultyService.getAllFaculty();
-        Assert.assertEquals("Failure: expected size", 2,faculties.size());
+        Assert.assertEquals("Failure: expected size", 3,faculties.size());
         facultyService.deleteFacultyById(faculty.getId());
         Faculty deletedFaculty = facultyService.getFacultyById(faculty.getId());
         Assert.assertNull("Failure: expected deletedFaculty to be null since is supposed to have been deleted", deletedFaculty);

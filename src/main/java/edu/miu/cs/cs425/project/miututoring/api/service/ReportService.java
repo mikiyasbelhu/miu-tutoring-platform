@@ -16,9 +16,9 @@ public interface ReportService {
     Page<Report> getAllReportsPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
     List<Report> getAllReportsInATutorialGroup(Long tutorialGroupId);
     Report getReportById(Integer reportId);
-    Report getReportByStudentId(Long studentId);
+    List<Report> getReportByStudentId(Long studentId);
     Report saveReport(Report report);
     Report updateReport(Report updatedReport, Integer reportId);
     void deleteReportById(Integer reportId);
-    Page<Report> searchReports(String searchQuery, Student student, Course course, TutorialGroup tutorialGroup, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
+    Page<Report> searchReports(String searchQuery, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
 }

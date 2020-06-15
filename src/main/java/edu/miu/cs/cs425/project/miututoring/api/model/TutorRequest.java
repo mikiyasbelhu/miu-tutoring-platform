@@ -86,4 +86,17 @@ public class TutorRequest {
                 this.status,
                 this.experience);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result;
+        if((obj == null) || (getClass() != obj.getClass())){
+            result = false;
+        } // end if
+        else{
+            TutorRequest other = (TutorRequest) obj;
+            result = this.getStatus().equals(other.getStatus()) &&  this.getExperience().equals(other.getExperience()) && this.getSection().getSectionName().equals(other.getSection().getSectionName());
+        } // end else
+        return result;
+    }
 }
