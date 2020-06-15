@@ -53,16 +53,9 @@ public class FacultyServiceImpl implements FacultyService {
          if(!facultyRepository.findByUsername(faculty.getUsername()).isPresent()){
              String plainPasssword = faculty.getPassword();
              faculty.setPassword(this.passwordEncoder.encode(plainPasssword));
-
              Faculty savedFaculty = facultyRepository.save(faculty);
              String message =  EmailGenerator.generateWelcomeMessage(savedFaculty.getFirstName(),savedFaculty.getUsername(),plainPasssword);
              String body = EmailGenerator.generateEmail(message);
-//             try {
-//                 notificationService.sendNotification(username,faculty.getUsername(),
-//                         body, "MIU Tutoring registration");
-//             } catch (MessagingException e) {
-//                 System.out.println("Unable to send email");
-//             }
              return savedFaculty;
         }
         return null;
