@@ -61,7 +61,7 @@ class EnrollmentControllerTest {
         Student student1 = new Student("student@miu.edu","student","000-61-0001", "Tesfaye", "Lemma", "Girum", 3.45, LocalDate.of(2019,5,24));
         Faculty faculty1 = new Faculty("faculty@miu.edu","faculty", "Obinna", "A", "Kalu","Software Engineeing CS425");
         Course course = new Course("CS425", "Software Engineering", 4);
-        Section section = new Section("CS425-2020-06-01", "Library 109", "2020-06", course);
+        Section section = new Section("CS425-2020-06-01", "Library 109", "2020-06", course,faculty1);
 
         Enrollment enrollment=new Enrollment(student1,section);
 
