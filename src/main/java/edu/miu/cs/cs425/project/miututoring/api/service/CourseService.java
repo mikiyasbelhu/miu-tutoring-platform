@@ -18,5 +18,5 @@ public interface CourseService {
     void deleteCourseById(Integer courseId);
     Course getCourseById(Integer courseId);
     Page<Course> getAllCoursesPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
-    Page<Course> searchCourses(String courseName, String courseNumber, Integer courseCredit, int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
+    Page<Course> searchCourses(String searchQuery,int pageNo, Integer pageSize, String sortBy, Boolean sortDesc);
 }
