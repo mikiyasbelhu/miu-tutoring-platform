@@ -138,12 +138,19 @@ public class User implements UserDetails {
 
     @Override
     public boolean equals(Object obj) {
+        System.out.println(obj.getClass());
         boolean result;
         if((obj == null) || (getClass() != obj.getClass())){
             result = false;
         } // end if
-        else{
+        else if(obj.getClass() == Faculty.class){
             Faculty other = (Faculty) obj;
+            result = this.getUsername().equals(other.getUsername()) &&
+                    this.getMiddleName().equals(other.getMiddleName()) &&
+                    this.getLastName().equals(other.getLastName())&&
+                    this.getRoles().equals(other.getRoles());
+        } else {
+            Student other = (Student) obj;
             result = this.getUsername().equals(other.getUsername()) &&
                     this.getMiddleName().equals(other.getMiddleName()) &&
                     this.getLastName().equals(other.getLastName())&&
