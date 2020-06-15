@@ -37,7 +37,7 @@ public class FacultyController {
         return facultyService.registerFaculty(faculty);
     }
 
-    @PostMapping(value = {"/edit/{facultyId}"})
+    @PutMapping(value = {"/edit/{facultyId}"})
     public Faculty updateFaculty(@Valid @RequestBody Faculty updateFaculty, @PathVariable Long facultyId){
         return facultyService.updateFaculty(updateFaculty,facultyId);
     }
