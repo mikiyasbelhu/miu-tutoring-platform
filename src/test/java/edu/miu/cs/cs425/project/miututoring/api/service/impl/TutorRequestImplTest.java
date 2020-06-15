@@ -129,9 +129,11 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
 
     @Test
     void acceptTutorRequest() {
+    TutorialGroup tutorialGroup1 = new TutorialGroup();
+    tutorialGroupService.registerTutorialGroup(tutorialGroup1);
     TutorRequest accepted = tutorRequestService.getTutorRequestById(1);
     accepted.setStatus(TutorRequest.Status.ACCEPTED);
-    TutorRequest actual = tutorRequestService.acceptTutorRequest(1);
+    TutorRequest actual = tutorRequestService.acceptTutorRequest(1,tutorialGroup1);
     Assert.assertNotNull("Failure: expected tutor request not to be null", actual);
     Assert.assertEquals("Failure: expected tutor request status to be the same", accepted.getStatus(), actual.getStatus());
     logger.info("Tutorial Request Data: " + actual);

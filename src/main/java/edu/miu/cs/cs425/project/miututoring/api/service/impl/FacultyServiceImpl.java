@@ -65,7 +65,9 @@ public class FacultyServiceImpl implements FacultyService {
 //             }
              return savedFaculty;
         }
-        return null;
+         else{
+             throw new Error("Username " + username + " is already taken");
+         }
     }
 
     @Override

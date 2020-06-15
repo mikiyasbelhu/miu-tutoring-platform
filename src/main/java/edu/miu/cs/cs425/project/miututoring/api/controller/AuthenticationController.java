@@ -53,7 +53,7 @@ public class AuthenticationController {
         final User user = userDetailsService.getByUsername(authenticationRequest.getUsername());
         final List<String> roles = user.getRoles();
         final String jwt = jwtTokenUtil.generateToken(userDetails,roles);
-        final String name = user.getFirstName() + (user.getMiddleName() != "" ? " " + user.getMiddleName(): "") + user.getLastName();
+        final String name = user.getFirstName() + (user.getMiddleName() != "" ? " " + user.getMiddleName(): "") + " " + user.getLastName();
         return ok(new AuthenticationResponse(jwt,userDetails.getUsername(),name,roles));
     }
 
@@ -61,6 +61,7 @@ public class AuthenticationController {
     public ResponseEntity currentUser(@AuthenticationPrincipal UserDetails userDetails){
         Map<Object, Object> model = new HashMap<>();
         model.put("username", userDetails.getUsername());
+        model.put("user", userDetailsService.getByUsername(userDetails.getUsername()));
         model.put("roles", userDetails.getAuthorities()
                 .stream()
                 .map(a -> ((GrantedAuthority) a).getAuthority())
