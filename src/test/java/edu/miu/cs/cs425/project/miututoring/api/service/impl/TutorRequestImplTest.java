@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-
 @Transactional
 class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
 
@@ -65,7 +64,7 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void getTutorRequestByInvalidId(){
+    void getTutorRequestByInvalidId() {
         Integer requestId = Integer.MAX_VALUE;
         TutorRequest actual = tutorRequestService.getTutorRequestById(requestId);
         Assert.assertNull("Failure: expected tutorial request to be not null", actual);
@@ -119,7 +118,7 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
         enrollmentService.saveEnrollment(enrollment1);
         TutorRequest updater = new TutorRequest(section2, enrollment1, "I have 10 years of experience");
 
-        TutorRequest updated = tutorRequestService.updateTutorRequest(updater,2);
+        TutorRequest updated = tutorRequestService.updateTutorRequest(updater, 2);
         Assert.assertNotNull("Failure: expected tutor request not to be null", updated);
         Assert.assertNotNull("Failure: expected tutor request Id not to be null", updated.getRequestId());
         Assert.assertEquals("Failure: expected section Id to be the same", section2.getSectionId(), updated.getSection().getSectionId());
@@ -129,14 +128,20 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
 
     @Test
     void acceptTutorRequest() {
-    TutorialGroup tutorialGroup1 = new TutorialGroup();
-    tutorialGroupService.registerTutorialGroup(tutorialGroup1);
-    TutorRequest accepted = tutorRequestService.getTutorRequestById(1);
-    accepted.setStatus(TutorRequest.Status.ACCEPTED);
-    TutorRequest actual = tutorRequestService.acceptTutorRequest(1,tutorialGroup1);
-    Assert.assertNotNull("Failure: expected tutor request not to be null", actual);
-    Assert.assertEquals("Failure: expected tutor request status to be the same", accepted.getStatus(), actual.getStatus());
-    logger.info("Tutorial Request Data: " + actual);
+        Faculty faculty2 = new Faculty("bbbbb@miu.edu", "yours", "Michael", "", "Zijlstra", "Computer Science CS420");
+        facultyService.registerFaculty(faculty2);
+        Course course1 = new Course("CS420", "MPP", 4);
+        courseService.saveCourse(course1);
+        Section section2 = new Section("CS420-2020-06-03", "Library 210", "2020-08", course1, faculty2);
+        sectionService.saveSection(section2);
+        TutorialGroup tutorialGroup1 = new TutorialGroup("CS420", section2);
+        tutorialGroupService.registerTutorialGroup(tutorialGroup1);
+        TutorRequest accepted = tutorRequestService.getTutorRequestById(1);
+        accepted.setStatus(TutorRequest.Status.ACCEPTED);
+        TutorRequest actual = tutorRequestService.acceptTutorRequest(1, tutorialGroup1);
+        Assert.assertNotNull("Failure: expected tutor request not to be null", actual);
+        Assert.assertEquals("Failure: expected tutor request status to be the same", accepted.getStatus(), actual.getStatus());
+        logger.info("Tutorial Request Data: " + actual);
     }
 
     @Test
@@ -145,7 +150,7 @@ class TutorRequestImplTest extends AbstractMiuTutoringComponentTest {
         rejected.setStatus(TutorRequest.Status.REJECTED);
         TutorRequest actual = tutorRequestService.denyTutorRequest(1);
         Assert.assertNotNull("Failure: expected tutor request to not be null", actual);
-        Assert.assertEquals("Failure: expected tutor request status to be the same",rejected.getStatus(), actual.getStatus());
+        Assert.assertEquals("Failure: expected tutor request status to be the same", rejected.getStatus(), actual.getStatus());
         logger.info("Tutorial Request data: " + actual);
     }
 }
