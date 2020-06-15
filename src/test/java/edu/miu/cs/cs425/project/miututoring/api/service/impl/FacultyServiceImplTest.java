@@ -38,7 +38,7 @@ public class FacultyServiceImplTest extends  AbstractMiuTutoringComponentTest{
     }
 
     @Test
-    public void testRegisterFaculty(){
+    public void testRegisterFaculty() throws Exception {
         Faculty faculty = new Faculty("faculty4@miu.edu","facu","Trevor","","Noah","Machine Learning CS-588");
         facultyService.registerFaculty(faculty);
         Assert.assertNotNull("Failure: expected not null", faculty);
@@ -50,7 +50,7 @@ public class FacultyServiceImplTest extends  AbstractMiuTutoringComponentTest{
     }
 
     @Test
-    public void testUpdateFaculty(){
+    public void testUpdateFaculty() throws Exception {
         Faculty faculty = new Faculty("faculty5@miu.edu","facu1","John","","Oliver","Advanced System Programming CS-590");
         facultyService.registerFaculty(faculty);
         Faculty updatedFaculty = new Faculty("faculty5@miu.edu","facu1","John","","Oliver","Database Systems CS-329");
@@ -62,7 +62,7 @@ public class FacultyServiceImplTest extends  AbstractMiuTutoringComponentTest{
     }
 
     @Test
-    public void testDeleteFaculty(){
+    public void testDeleteFaculty() throws Exception {
         Faculty faculty = new Faculty("faculty5@miu.edu","facu1","John","","Oliver","Advanced System Programming CS-590");
         facultyService.registerFaculty(faculty);
         Assert.assertNotNull("Failure: expected faculty to be not null", faculty);
