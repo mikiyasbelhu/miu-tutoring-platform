@@ -60,7 +60,7 @@ public class FacultyServiceImpl implements FacultyService {
              String body = EmailGenerator.generateEmail(message);
              try {
                  notificationService.sendNotification(username,faculty.getUsername(),
-                         body, "MIU Tutoring registration");
+                 body, "MIU Tutoring registration");
              } catch (MessagingException e) {
                  System.out.println("Unable to send email");
              }

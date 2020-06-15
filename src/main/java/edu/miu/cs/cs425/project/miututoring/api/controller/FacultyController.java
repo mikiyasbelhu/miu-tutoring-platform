@@ -17,7 +17,6 @@ public class FacultyController {
 
     public static final String BASE_URL = "/api/v1/faculty";
 
-
     private FacultyService facultyService;
 
     @Autowired
@@ -55,9 +54,5 @@ public class FacultyController {
                                        @RequestParam String sortBy, @RequestParam(defaultValue = "false")Boolean sortDesc){
         return facultyService.searchFaculty(searchQuery,page,itemsPerPage,sortBy,sortDesc);
     }
-
-
-
-
 
 }
