@@ -3,6 +3,7 @@ package edu.miu.cs.cs425.project.miututoring.api.service;
 import edu.miu.cs.cs425.project.miututoring.api.model.User;
 import edu.miu.cs.cs425.project.miututoring.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails. UsernameNotFoundException;
@@ -16,11 +17,12 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private UserRepository userRepository;
 
-    @Autowired
     PasswordEncoder passwordEncoder;
 
-    public MyUserDetailsService(UserRepository users) {
+    @Autowired
+    public MyUserDetailsService(UserRepository users, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = users;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User getByUsername(String username){

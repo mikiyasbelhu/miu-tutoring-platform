@@ -7,6 +7,7 @@ import edu.miu.cs.cs425.project.miututoring.api.service.StudentService;
 import edu.miu.cs.cs425.project.miututoring.api.util.EmailGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -28,7 +29,7 @@ public class StudentServiceImpl implements StudentService {
     NotificationService notificationService;
 
     @Autowired
-    StudentServiceImpl(StudentRepository studentRepository, PasswordEncoder passwordEncoder, NotificationService notificationService){
+    public StudentServiceImpl(StudentRepository studentRepository, @Lazy PasswordEncoder passwordEncoder, NotificationService notificationService){
         this.studentRepository = studentRepository;
         this.passwordEncoder = passwordEncoder;
         this.notificationService = notificationService;
@@ -50,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student registerStudent(Student student) {
+    public Student registerStudent(Student student) throws Exception {
         if(!studentRepository.findByUsername(student.getUsername()).isPresent()){
             String plainPasssword = student.getPassword();
             student.setPassword(this.passwordEncoder.encode(plainPasssword));
@@ -58,16 +59,16 @@ public class StudentServiceImpl implements StudentService {
             Student savedStudent = studentRepository.save(student);
             String message =  EmailGenerator.generateWelcomeMessage(savedStudent.getFirstName(),savedStudent.getUsername(),plainPasssword);
             String body = EmailGenerator.generateEmail(message);
-//            try {
-//                notificationService.sendNotification(username,student.getUsername(),
-//                        body, "MIU Tutoring registration");
-//            } catch (MessagingException e) {
-//                System.out.println("Unable to send email");
-//            }
+            try {
+                notificationService.sendNotification(username,student.getUsername(),
+                        body, "MIU Tutoring registration");
+            } catch (MessagingException e) {
+                System.out.println("Unable to send email");
+            }
             return savedStudent;
         }
         else{
-            throw new Error("Username " + username + " is already taken");
+            throw new Exception("Username " + username + " is already taken");
         }
     }
 
@@ -94,6 +95,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Page<Student> searchStudents(String searchQuery, int pageNo,Integer pageSize,String sortBy, Boolean sortDesc) {
         return studentRepository.findAllByStudentNumberContainingOrFirstNameContainingOrMiddleNameContainingOrLastNameContainingOrderByFirstName(searchQuery, searchQuery, searchQuery, searchQuery, PageRequest.of(pageNo, pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
+    }
+
+    @Override
+    public Student getByUsername(String username) {
+        return studentRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found"));
     }
 
 }

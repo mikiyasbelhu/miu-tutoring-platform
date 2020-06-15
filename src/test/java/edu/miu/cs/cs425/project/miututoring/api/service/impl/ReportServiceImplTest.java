@@ -78,7 +78,7 @@ class ReportServiceImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void saveReport() {
+    void saveReport() throws Exception {
         Student student1 = new Student("mock@miu.edu", "mock", "000-61-0003", "Alem", "Lemma", "Girum", 3.45, LocalDate.of(2020, 5, 24));
         studentService.registerStudent(student1);
         Faculty faculty1 = new Faculty("mocker@miu.edu", "faculty", "Michael", "A", "Zijlstra", "MPP CS420");
@@ -101,7 +101,7 @@ class ReportServiceImplTest extends AbstractMiuTutoringComponentTest {
     }
 
     @Test
-    void updateReport() {
+    void updateReport() throws Exception {
         Student student1 = new Student("mock@miu.edu", "mock", "000-61-0003", "Alem", "Lemma", "Girum", 3.45, LocalDate.of(2020, 5, 24));
         studentService.registerStudent(student1);
         Faculty faculty1 = new Faculty("mocker@miu.edu", "faculty", "Michael", "A", "Zijlstra", "MPP CS420");
@@ -140,6 +140,5 @@ class ReportServiceImplTest extends AbstractMiuTutoringComponentTest {
         Assert.assertNotNull("Failure: expected report not to be null", actual);
         Assert.assertEquals("Failure: expected student Id to be 4", studentId, actual.get(0).getStudent().getId());
     }
-
 
 }

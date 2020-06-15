@@ -10,7 +10,7 @@ public interface SectionService {
     List<Section> getAllSections();
     Section getSectionById(Integer sectionId);
     Section saveSection(Section section);
-    Section updateSection(Section updatedSection, Integer enrollmentId);
+    Section updateSection(Section updatedSection, Integer sectionId);
     void deleteSectionById(Integer sectionId);
     Section registerSection(Section section);
 

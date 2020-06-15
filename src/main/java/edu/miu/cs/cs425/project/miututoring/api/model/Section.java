@@ -35,7 +35,6 @@ public class Section {
     private Faculty faculty;
 
     @OneToMany
-    @JsonIgnore
     private List<TutorialGroup> tutorialGroup;
 
     public Section() {
