@@ -28,7 +28,7 @@ public class TutorRequestController {
     @GetMapping(value = "/list")
     public Page<TutorRequest> getListOfTutorRequests(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer itemsPerPage,
                                                      @RequestParam(defaultValue = "") String sortBy, @RequestParam(defaultValue = "false") Boolean sortDesc){
-        return tutorRequestService.listTutorRequests(page,itemsPerPage,sortBy,sortDesc);
+        return tutorRequestService.listTutorRequestsPaged(page,itemsPerPage,sortBy,sortDesc);
     }
 
     @GetMapping(value = "/get/{tutorRequestId}")

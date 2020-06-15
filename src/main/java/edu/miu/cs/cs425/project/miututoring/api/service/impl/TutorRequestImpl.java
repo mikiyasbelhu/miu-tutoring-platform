@@ -17,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 @Service
 public class TutorRequestImpl implements TutorRequestService {
@@ -38,9 +39,15 @@ public class TutorRequestImpl implements TutorRequestService {
     }
 
     @Override
-    public Page<TutorRequest> listTutorRequests(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
+    public List<TutorRequest> listTutorRequests() {
+        return tutorRequestRepository.findAll();
+    }
+
+    @Override
+    public Page<TutorRequest> listTutorRequestsPaged(int pageNo, Integer pageSize, String sortBy, Boolean sortDesc) {
         return tutorRequestRepository.findAll(PageRequest.of(pageNo, pageSize == -1 ? Integer.MAX_VALUE :pageSize, sortBy.equals("") ? Sort.unsorted() : Sort.by(sortDesc ? Sort.Direction.DESC :Sort.Direction.ASC ,sortBy)));
     }
+
 
     @Override
     public TutorRequest getTutorRequestById(Integer tutorRequestId) {
