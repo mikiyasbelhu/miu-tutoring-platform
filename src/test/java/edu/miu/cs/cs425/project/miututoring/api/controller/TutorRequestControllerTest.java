@@ -59,9 +59,8 @@ public class TutorRequestControllerTest {
     @InjectMocks
     private TutorRequestController tutorRequestController;
 
+
     private ObjectMapper om = new ObjectMapper();
-
-
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
