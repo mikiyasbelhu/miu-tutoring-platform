@@ -35,12 +35,13 @@ public class FacultyController {
         return facultyService.getFacultyById(facultyId);
     }
     @PostMapping(value = "/register")
+
     public Faculty registerFaculty(@Valid @RequestBody Faculty faculty){
         faculty.setRoles(new ArrayList<>(Arrays.asList("ROLE_FACULTY")));
         return facultyService.registerFaculty(faculty);
     }
 
-    @PostMapping(value = {"/edit/{facultyId}"})
+    @PutMapping(value = {"/edit/{facultyId}"})
     public Faculty updateFaculty(@Valid @RequestBody Faculty updateFaculty, @PathVariable Long facultyId){
         return facultyService.updateFaculty(updateFaculty,facultyId);
     }
