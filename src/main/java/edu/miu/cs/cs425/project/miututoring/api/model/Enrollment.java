@@ -1,9 +1,13 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@enrollmentId")
 public class Enrollment {
     public enum RoleType {
         TUTEE,
