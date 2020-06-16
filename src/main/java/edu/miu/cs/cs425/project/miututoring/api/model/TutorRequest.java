@@ -20,7 +20,6 @@ public class TutorRequest {
 
     @OneToOne
     @JoinColumn(name = "enrollment")
-    @NotNull(message = "Enrollment Id can not be null")
     private Enrollment enrollment;
 
     private Status status;
@@ -88,5 +87,18 @@ public class TutorRequest {
                 this.enrollment,
                 this.status,
                 this.experience);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result;
+        if((obj == null) || (getClass() != obj.getClass())){
+            result = false;
+        } // end if
+        else{
+            TutorRequest other = (TutorRequest) obj;
+            result = this.getStatus().equals(other.getStatus()) &&  this.getExperience().equals(other.getExperience()) && this.getSection().getSectionName().equals(other.getSection().getSectionName());
+        } // end else
+        return result;
     }
 }

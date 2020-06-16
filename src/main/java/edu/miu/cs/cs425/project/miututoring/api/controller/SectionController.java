@@ -12,6 +12,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/api/v1/section",produces = MediaType.APPLICATION_JSON_VALUE)
 public class SectionController {
+
+    public static final String BASE_URL= "/api/v1/section";
+
      SectionService sectionService;
     @Autowired
     public SectionController(SectionService sectionService) {

@@ -28,4 +28,21 @@ public class Faculty extends User {
     public void setDepartment(String department) {
         this.department = department;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result;
+        if((obj == null) || (getClass() != obj.getClass())){
+            result = false;
+        } // end if
+        else{
+            Faculty other = (Faculty) obj;
+            result = this.getUsername().equals(other.getUsername()) &&
+                    this.getMiddleName().equals(other.getMiddleName()) &&
+                    this.getLastName().equals(other.getLastName())&&
+                    this.getDepartment().equals(other.getDepartment())&&
+                    this.getRoles().equals(other.getRoles());
+        } // end else
+        return result;
+    }
 }

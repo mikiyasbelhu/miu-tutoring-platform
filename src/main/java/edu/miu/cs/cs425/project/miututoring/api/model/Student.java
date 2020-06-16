@@ -19,7 +19,6 @@ public class Student extends User {
 
     private Double cgpa;
 
-    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate enrollmentDate;
 
@@ -58,6 +57,12 @@ public class Student extends User {
         this.studentNumber = studentNumber;
         this.cgpa = cgpa;
         this.enrollmentDate = enrollmentDate;
+    }
+
+    public Student(String username,String password, @NotBlank String studentNumber, @NotBlank String firstName, String middleName, @NotBlank String lastName, Double cgpa) {
+        super(username,password,firstName, middleName, lastName, new ArrayList<>(Arrays.asList("ROLE_STUDENT")));
+        this.studentNumber = studentNumber;
+        this.cgpa = cgpa;
     }
 
     public String getStudentNumber() {

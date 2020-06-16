@@ -12,6 +12,8 @@ import java.util.List;
 @RequestMapping(value="/api/v1/enrollment")
 public class EnrollmentController {
 
+    public static final String BASE_URL="/api/v1/enrollment";
+
     EnrollmentService enrollmentService;
 
     @Autowired
