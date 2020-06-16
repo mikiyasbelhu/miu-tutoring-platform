@@ -1,9 +1,12 @@
 package edu.miu.cs.cs425.project.miututoring.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@requestId")
 public class TutorRequest {
 
 
